@@ -1,0 +1,343 @@
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hi_coach/core/common/widget/heading/heading.dart';
+import 'package:hi_coach/core/common/widget/indicators/progress_indicators.dart';
+import 'package:hi_coach/core/conifg/colors.dart';
+import 'package:hi_coach/core/conifg/strings.dart';
+import 'package:hi_coach/src/auth/widget/auth_button.dart';
+import 'package:hi_coach/src/bottom_nav_bar/views/bottom_navbar_view.dart';
+import 'package:hi_coach/src/profile/controller/profile_controller.dart';
+import 'package:loading_overlay/loading_overlay.dart';
+
+class CoachProfile extends StatefulWidget {
+  const CoachProfile({super.key});
+
+  @override
+  State<CoachProfile> createState() => _CoachProfileState();
+}
+
+class _CoachProfileState extends State<CoachProfile> {
+  final List<TextEditingController> _playingControllers = [];
+  final List<TextEditingController> _coachingControllers = [];
+  final TextEditingController _bio = TextEditingController();
+  final List<FocusNode> _playingFocusNodes = [];
+  final List<FocusNode> _coachingFocusNodes = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _addNewPlayingKeyPoint();
+    _addNewCoachingKeyPoint();
+  }
+
+  void _addNewPlayingKeyPoint() {
+    final controller = TextEditingController();
+    final focusNode = FocusNode();
+
+    controller.addListener(() {});
+
+    focusNode.addListener(() {
+      if (focusNode.hasFocus &&
+          controller.text.isEmpty &&
+          _playingFocusNodes.length > 1) {
+        if (_playingFocusNodes[_playingFocusNodes.length - 2] == focusNode) {
+          _removePlayingKeyPoint(_playingFocusNodes.length - 1);
+        }
+      }
+    });
+
+    setState(() {
+      _playingControllers.add(controller);
+      _playingFocusNodes.add(focusNode);
+    });
+  }
+
+  void _removePlayingKeyPoint(int index) {
+    if (index != 0) {
+      setState(() {
+        _playingControllers[index].dispose();
+        _playingFocusNodes[index].dispose();
+        _playingControllers.removeAt(index);
+        _playingFocusNodes.removeAt(index);
+      });
+    }
+  }
+
+  void _addNewCoachingKeyPoint() {
+    final controller = TextEditingController();
+    final focusNode = FocusNode();
+
+    controller.addListener(() {});
+
+    focusNode.addListener(() {
+      if (focusNode.hasFocus &&
+          controller.text.isEmpty &&
+          _coachingFocusNodes.length > 1) {
+        if (_coachingFocusNodes[_coachingFocusNodes.length - 2] == focusNode) {
+          _removeCoachingKeyPoint(_coachingFocusNodes.length - 1);
+        }
+      }
+    });
+
+    setState(() {
+      _coachingControllers.add(controller);
+      _coachingFocusNodes.add(focusNode);
+    });
+  }
+
+  void _removeCoachingKeyPoint(int index) {
+    if (index != 0) {
+      setState(() {
+        _coachingControllers[index].dispose();
+        _coachingFocusNodes[index].dispose();
+        _coachingControllers.removeAt(index);
+        _coachingFocusNodes.removeAt(index);
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _coachingControllers.map((controller) => controller.dispose());
+    _playingControllers.map((controller) => controller.dispose());
+    _bio.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<ProfileController>();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(AppStrings.appName),
+      ),
+      body: Obx(
+        () => LoadingOverlay(
+          isLoading: controller.updatingInfo.value,
+          progressIndicator: circularProgress(context),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 50),
+                  TitleSubtitle(
+                      padding: EdgeInsets.zero, title: 'Your Profile'),
+                  const SizedBox(height: 10),
+                  Text(
+                    'Bio',
+                    style: Theme.of(context).textTheme.titleSmall!,
+                  ),
+                  Container(
+                    height: 150,
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12, vertical: 12),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: AppColors.filled),
+                    child: TextField(
+                      maxLines: null,
+                      maxLength: null,
+                      controller: _bio,
+                      decoration: const InputDecoration(
+                          hintText:
+                              'Tell us about yourself and your teaching style...',
+                          disabledBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          border: InputBorder.none),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    'Playing Experience',
+                    style: Theme.of(context).textTheme.titleSmall!,
+                  ),
+                  ..._playingControllers.asMap().entries.map(
+                    (entry) {
+                      final index = entry.key;
+                      final controller = entry.value;
+                      final focusNode = _playingFocusNodes[index];
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Row(
+                          children: [
+                            Text(
+                              "${index + 1}",
+                              style: Theme.of(context).textTheme.titleSmall!,
+                            ),
+                            const SizedBox(width: 15),
+                            Expanded(
+                              child: TextField(
+                                controller: controller,
+                                focusNode: focusNode,
+                                onSubmitted: (text) {
+                                  if (text.isNotEmpty &&
+                                      index == _playingControllers.length - 1) {
+                                    _addNewPlayingKeyPoint();
+                                    FocusScope.of(context)
+                                        .requestFocus(_playingFocusNodes.last);
+                                  }
+                                },
+                                decoration: InputDecoration(
+                                    hintText:
+                                        'Tell us about your accolades as a player...',
+                                    suffixIcon: index == 0
+                                        ? null
+                                        : IconButton(
+                                            onPressed: () {
+                                              _removePlayingKeyPoint(index);
+                                            },
+                                            icon: const Icon(
+                                              Icons.close,
+                                              size: 15,
+                                            )),
+                                    disabledBorder:
+                                        const UnderlineInputBorder(),
+                                    enabledBorder: const UnderlineInputBorder(),
+                                    errorBorder: const UnderlineInputBorder(),
+                                    focusedBorder: const UnderlineInputBorder(),
+                                    border: const UnderlineInputBorder()),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 30),
+                  Text(
+                    'Coaching Experience',
+                    style: Theme.of(context).textTheme.titleSmall!,
+                  ),
+                  ..._coachingControllers.asMap().entries.map(
+                    (entry) {
+                      final index = entry.key;
+                      final controller = entry.value;
+                      final focusNode = _coachingFocusNodes[index];
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Row(
+                          children: [
+                            Text(
+                              "${index + 1}",
+                              style: Theme.of(context).textTheme.titleSmall!,
+                            ),
+                            const SizedBox(width: 15),
+                            Expanded(
+                              child: TextField(
+                                controller: controller,
+                                focusNode: focusNode,
+                                onSubmitted: (text) {
+                                  if (text.isNotEmpty &&
+                                      index ==
+                                          _coachingControllers.length - 1) {
+                                    _addNewCoachingKeyPoint();
+                                    FocusScope.of(context)
+                                        .requestFocus(_coachingFocusNodes.last);
+                                  }
+                                },
+                                decoration: InputDecoration(
+                                    hintText:
+                                        'Tell us about your coaching experience...',
+                                    suffixIcon: index == 0
+                                        ? null
+                                        : IconButton(
+                                            onPressed: () {
+                                              _removeCoachingKeyPoint(index);
+                                            },
+                                            icon: const Icon(
+                                              Icons.close,
+                                              size: 15,
+                                            )),
+                                    disabledBorder:
+                                        const UnderlineInputBorder(),
+                                    enabledBorder: const UnderlineInputBorder(),
+                                    errorBorder: const UnderlineInputBorder(),
+                                    focusedBorder: const UnderlineInputBorder(),
+                                    border: const UnderlineInputBorder()),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 40),
+                  Text(
+                    'Certifications',
+                    style: Theme.of(context).textTheme.titleSmall!,
+                  ),
+                  const SizedBox(height: 10),
+                  Stack(
+                    children: [
+                      Container(
+                        height: 85,
+                        width: 70,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: AppColors.border),
+                        ),
+                        child: controller.certificaiton.value != null
+                            ? Image(
+                                image: FileImage(
+                                    File(controller.certificaiton.value!.path)),
+                                fit: BoxFit.cover,
+                              )
+                            : Center(
+                                child: IconButton(
+                                  onPressed: () {
+                                    controller.pickCertificate();
+                                  },
+                                  icon: const Icon(Icons.add),
+                                ),
+                              ),
+                      ),
+                      if (controller.certificaiton.value != null)
+                        Positioned(
+                            top: 0,
+                            bottom: 0,
+                            right: 0,
+                            left: 0,
+                            child: IconButton(
+                                onPressed: () {
+                                  controller.certificaiton.value = null;
+                                },
+                                icon: const Icon(Icons.close,
+                                    color: AppColors.white)))
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Center(
+                    child: AuthButton(
+                      label: 'Save',
+                      onPressed: () {
+                        controller.uploadCertifications(() {
+                          controller.updatingCoachInfo({
+                            'bio': _bio.text,
+                            'coachingExperience': _coachingControllers
+                                .map((controller) => controller.text)
+                                .join('\n'),
+                            'playingExperience': _playingControllers
+                                .map((controller) => controller.text)
+                                .join('\n')
+                          }, () {
+                            Get.offAll(() => const BottomNavbarView());
+                          });
+                        });
+                      },
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
