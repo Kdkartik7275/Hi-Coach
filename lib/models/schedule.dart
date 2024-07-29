@@ -12,7 +12,9 @@ class Schedule {
   int? pax;
   int? minAge;
   int? maxAge;
-  List<String>? students;
+  List<String>? confirmedStudents;
+  List<String>? invited;
+  List<String>? requests;
   String? description;
 
   Schedule({
@@ -26,7 +28,9 @@ class Schedule {
     required this.pax,
     required this.minAge,
     required this.maxAge,
-    required this.students,
+    required this.confirmedStudents,
+    required this.requests,
+    required this.invited,
     required this.description,
   });
 
@@ -42,7 +46,9 @@ class Schedule {
       'pax': pax,
       'minAge': minAge,
       'maxAge': maxAge,
-      'students': students,
+      'confirmedStudents': confirmedStudents,
+      'invited': invited,
+      'requests': requests,
       'description': description,
     };
   }
@@ -59,7 +65,9 @@ class Schedule {
       pax: map['pax'],
       minAge: map['minAge'],
       maxAge: map['maxAge'],
-      students: List<String>.from(map['students']),
+      confirmedStudents: List<String>.from(map['confirmedStudents']),
+      requests: List<String>.from(map['requests']),
+      invited: List<String>.from(map['invited']),
       description: map['description'],
     );
   }

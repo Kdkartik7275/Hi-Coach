@@ -37,6 +37,8 @@ class ScheduleController extends GetxController {
 
   var schedules = Rx<List<Schedule>>([]);
 
+  var meetings = Rx<List<Meeting>>([]);
+
   // SERVICES
 
   final services = ScheduleServices();
@@ -75,25 +77,48 @@ class ScheduleController extends GetxController {
       loading.value = true;
       final list = await services.getAllSchedules(coachID);
       schedules.value = list;
+      getMeetingDataSource();
       loading.value = false;
     } catch (e) {
       loading.value = false;
+      Get.snackbar('Erro', e.toString(), backgroundColor: AppColors.white);
     }
   }
 
   // Get Meeting Data Source
-  List<Meeting> getMeetingDataSource() {
-    List<Meeting> meetings = [];
+  void getMeetingDataSource() {
     loading.value = true;
+    meetings.value = []; // Clear previous meetings before adding new ones
     for (var schedule in schedules.value) {
+      String title = '';
       DateTime startTime = schedule.startTime!.toDate();
       DateTime endTime = schedule.endTime!.toDate();
-      Color color =
-          Colors.blue; // You can customize this based on your criteria
-      meetings.add(Meeting(schedule.title!, startTime, endTime, color));
+      List requests = schedule.requests!;
+      List confirmed = schedule.confirmedStudents!;
+      List invites = schedule.invited!;
+      Color color;
+
+      if (requests.isNotEmpty) {
+        title = '${requests.length}+ Pendings';
+        color = Colors.amber.shade100;
+      } else if (confirmed.length == schedule.pax) {
+        if (schedule.pax! > 2) {
+          title = 'Grp';
+        } else {
+          title = schedule.title!;
+        }
+        color = AppColors.primary;
+      } else if (invites.isNotEmpty) {
+        title = ' ${invites.length}/${schedule.pax}';
+        color = Colors.purple.shade100;
+      } else {
+        title = ' ${confirmed.length}/${schedule.pax}';
+        color = Colors.purple.shade100;
+      }
+
+      meetings.value.add(Meeting(title, startTime, endTime, color));
     }
     loading.value = false;
-    return meetings;
   }
 
   // ADD SCHEDULE FUNCTION
@@ -120,7 +145,9 @@ class ScheduleController extends GetxController {
             pax: int.parse(pax.value),
             minAge: int.parse(minAge.value),
             maxAge: int.parse(maxAge.value),
-            students: ids,
+            invited: ids,
+            confirmedStudents: [],
+            requests: [],
             description: desciption.text);
         await services.addSchedule(newSchedule, coachID);
         if (invitedStudents.value != []) {
@@ -132,7 +159,6 @@ class ScheduleController extends GetxController {
         Get.snackbar('Successfull', 'Class uploaded ',
             backgroundColor: AppColors.green);
       } catch (e) {
-        //
         loading.value = false;
       }
     } else {
@@ -153,7 +179,7 @@ class ScheduleController extends GetxController {
     try {
       loading.value = true;
 
-      await services.requrestToStudents(studentIDs, schedule, coachID);
+      await services.inviteStudents(studentIDs, schedule, coachID);
       loading.value = false;
     } catch (e) {
       loading.value = false;

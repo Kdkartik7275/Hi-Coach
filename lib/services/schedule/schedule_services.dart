@@ -38,25 +38,34 @@ class ScheduleServices {
     }
   }
 
-  Future<void> requrestToStudents(
+  Future<void> inviteStudents(
       List<String> studentIDs, Schedule schedule, String coachID) async {
     try {
-      for (var studentID in studentIDs) {
-        final requestID = const Uuid().v4();
-        ClassRequest request = ClassRequest(
-            requestID: requestID,
+      final scheduleRef = _firestore
+          .collection('Coaches')
+          .doc(coachID)
+          .collection('Schedules')
+          .doc(schedule.id);
+
+      await scheduleRef.update({
+        'invited': FieldValue.arrayUnion(studentIDs),
+      });
+
+      for (var student in studentIDs) {
+        String id = const Uuid().v4();
+        ClassRequest newRequest = ClassRequest(
+            requestID: id,
             classId: schedule.id!,
             classFrom: coachID,
-            studentID: studentID,
+            studentID: student,
             isAccepted: false,
             denied: false);
-
         await _firestore
             .collection('Students')
-            .doc(studentID)
+            .doc(student)
             .collection('Requests')
-            .doc(requestID)
-            .set(request.toMap());
+            .doc(id)
+            .set(newRequest.toMap());
       }
     } catch (e) {
       throw e.toString();

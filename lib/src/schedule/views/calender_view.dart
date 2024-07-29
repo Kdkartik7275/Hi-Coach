@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hi_coach/core/common/widget/containers/rounded_container.dart';
 import 'package:hi_coach/core/common/widget/indicators/progress_indicators.dart';
 import 'package:hi_coach/core/conifg/colors.dart';
 import 'package:hi_coach/src/profile/controller/profile_controller.dart';
 import 'package:hi_coach/src/schedule/controllers/schedule_controller.dart';
 import 'package:hi_coach/src/schedule/views/add_schedule_view.dart';
+import 'package:hi_coach/src/schedule/views/listing_class.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
@@ -46,21 +48,43 @@ class ScheduleView extends StatelessWidget {
             timeSlotViewSettings: const TimeSlotViewSettings(
               startHour: 7,
               endHour: 23,
-              timeIntervalHeight: 50,
+              timeIntervalHeight: 40,
               timeTextStyle: TextStyle(
                 fontSize: 12,
                 color: Colors.black,
               ),
             ),
-            dataSource: MeetingDataSource(controller.getMeetingDataSource()),
+            onTap: (details) {
+              if (details.appointments != null) {
+                final schedule = controller.schedules.value.where((sch) =>
+                    sch.startTime!.toDate() ==
+                        details.appointments!.first.from &&
+                    sch.endTime!.toDate() == details.appointments!.first.to);
+                if (schedule.first.requests!.isNotEmpty) {
+                  // SHOW REQUESTS DIALOG
+                  // print(true);
+                } else {
+                  bool isPastClass = schedule.first.startTime!
+                      .toDate()
+                      .isBefore(DateTime.now());
+
+                  Get.to(() => ListingClasses(
+                      isPastClass: isPastClass, schedule: schedule.first));
+                }
+              }
+            },
+            dataSource: MeetingDataSource(controller.meetings.value),
+            cellEndPadding: 0,
             appointmentBuilder: (context, details) {
-              return Container(
-                decoration: BoxDecoration(
-                  color: details.appointments.first.color.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(5),
-                ),
+              return TRoundedContainer(
+                backgroundColor: details.appointments.first.color,
+                radius: 5,
                 child: Center(
-                  child: Text(details.appointments.first.eventName),
+                  child: Text(
+                    details.appointments.first.eventName,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
               );
             },
@@ -69,18 +93,6 @@ class ScheduleView extends StatelessWidget {
       ),
     );
   }
-}
-
-List<Meeting> _getDataSource() {
-  final List<Meeting> meetings = <Meeting>[];
-  final DateTime today = DateTime.now();
-  final DateTime startTime =
-      DateTime(today.year, today.month, today.day, 9, 0, 0);
-  final DateTime endTime = startTime.add(const Duration(hours: 2));
-  meetings.add(Meeting('Meeting', startTime, endTime, Colors.red));
-  meetings.add(Meeting('Workout', startTime.add(const Duration(days: 1)),
-      endTime.add(const Duration(days: 1)), Colors.blue));
-  return meetings;
 }
 
 class Meeting {
