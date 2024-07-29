@@ -41,3 +41,10 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+
+# Ignore Configurations files
+lib/core/conifg/keys.dart
+
+
+# GOOGLE_API_KEY = AIzaSyCjKpwObSb4JnJZxTbeYzgAN_Ttn8f2zOU

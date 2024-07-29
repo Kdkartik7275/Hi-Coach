@@ -6,6 +6,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hi_coach/core/conifg/app_images.dart';
+import 'package:hi_coach/core/conifg/keys.dart';
 import 'package:hi_coach/core/utils/helpers/functions.dart';
 import 'dart:math';
 import 'package:http/http.dart' as http;
@@ -139,7 +140,7 @@ class LocationController extends GetxController {
   Future<List<PlaceModel>> getSuggestions(
       {required String input, required String sessionToken}) async {
     try {
-      String kGooglePlacesAPI = "AIzaSyCjKpwObSb4JnJZxTbeYzgAN_Ttn8f2zOU";
+      String kGooglePlacesAPI = Keys.googleApiKey;
       String baseURL =
           "https://maps.googleapis.com/maps/api/place/autocomplete/json";
       String request =
