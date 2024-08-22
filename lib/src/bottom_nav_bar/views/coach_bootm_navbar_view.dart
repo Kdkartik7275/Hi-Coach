@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hi_coach/core/common/controllers/location_controller.dart';
 import 'package:hi_coach/core/conifg/colors.dart';
 import 'package:hi_coach/src/bottom_nav_bar/controller/bottom_navbar_controller.dart';
 
@@ -8,6 +9,7 @@ class CoachBootmNavbarView extends GetView<BottomNavBarController> {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(LocationController());
     return Obx(
       () => Scaffold(
         appBar: AppBar(

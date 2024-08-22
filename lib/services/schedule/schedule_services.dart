@@ -1,78 +1,91 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:hi_coach/models/request.dart';
-import 'package:hi_coach/models/schedule.dart';
-import 'package:hi_coach/models/user.dart';
+import 'package:hi_coach/models/invitation.dart';
+import 'package:hi_coach/models/session.dart';
+import 'package:hi_coach/models/student.dart';
+import 'package:hi_coach/models/timings.dart';
 import 'package:uuid/uuid.dart';
 
 class ScheduleServices {
   final _firestore = FirebaseFirestore.instance;
 
-  Future<List<Schedule>> getAllSchedules(String coachID) async {
-    try {
-      final schedulesCollection = await _firestore
-          .collection('Coaches')
-          .doc(coachID)
-          .collection('Schedules')
-          .get();
+  // Future<List<Schedule>> getAllSchedules(String coachID) async {
+  //   try {
+  //     final schedulesRef = await _firestore
+  //         .collection('Schedules')
+  //         .where('coachID', isEqualTo: coachID)
+  //         .get();
 
-      List<Schedule> schedules = schedulesCollection.docs
-          .map((schedule) => Schedule.fromMap(schedule.data()))
-          .toList();
-      return schedules;
+  //     List<Schedule> schedules = schedulesRef.docs
+  //         .map((schedule) => Schedule.fromMap(schedule.data()))
+  //         .toList();
+
+  //     return schedules;
+  //   } catch (e) {
+  //     throw e.toString();
+  //   }
+  // }
+
+  Future<Timings> addTimings(String id, Timings timing) async {
+    try {
+      await _firestore.collection('Coaches').doc(id).update({
+        'timings': FieldValue.arrayUnion([timing])
+      });
+      return timing;
     } catch (e) {
       throw e.toString();
     }
   }
 
-  Future<Schedule> addSchedule(Schedule schedule, String coachID) async {
+  Future<Session> addCoachingSession(Session session) async {
     try {
       await _firestore
-          .collection('Coaches')
-          .doc(coachID)
-          .collection('Schedules')
-          .doc(schedule.id)
-          .set(schedule.toMap());
-      return schedule;
+          .collection('Classes')
+          .doc(session.id)
+          .set(session.toMap());
+
+      return session;
     } catch (e) {
       throw e.toString();
     }
   }
 
-  Future<void> inviteStudents(
-      List<String> studentIDs, Schedule schedule, String coachID) async {
+  // Future<Schedule> addSchedule(Schedule schedule) async {
+  //   try {
+  //     await _firestore
+  //         .collection('Schedules')
+  //         .doc(schedule.id)
+  //         .set(schedule.toMap());
+  //     return schedule;
+  //   } catch (e) {
+  //     throw e.toString();
+  //   }
+  // }
+
+  Future<void> inviteStudents(List<String> studentIDs, String sessionID,
+      String coachID, int pax) async {
     try {
-      final scheduleRef = _firestore
-          .collection('Coaches')
-          .doc(coachID)
-          .collection('Schedules')
-          .doc(schedule.id);
+      final scheduleRef = _firestore.collection('Classes').doc(sessionID);
 
-      await scheduleRef.update({
-        'invited': FieldValue.arrayUnion(studentIDs),
-      });
-
-      for (var student in studentIDs) {
+      for (var studentID in studentIDs) {
         String id = const Uuid().v4();
-        ClassRequest newRequest = ClassRequest(
-            requestID: id,
-            classId: schedule.id!,
-            classFrom: coachID,
-            studentID: student,
-            isAccepted: false,
-            denied: false);
+        Invitation newInvitation = Invitation(
+            id: id,
+            classID: sessionID,
+            coachID: coachID,
+            studentID: studentID,
+            isInvited: true,
+            pax: pax);
         await _firestore
-            .collection('Students')
-            .doc(student)
             .collection('Requests')
             .doc(id)
-            .set(newRequest.toMap());
+            .set(newInvitation.toMap());
       }
     } catch (e) {
       throw e.toString();
     }
   }
 
-  Future<List<UserModel>> searchStudents(String fullName) async {
+  Future<List<Student>> searchStudents(String fullName) async {
     try {
       QuerySnapshot querySnapshot = await _firestore
           .collection(
@@ -80,8 +93,8 @@ class ScheduleServices {
           .where('fullName', isGreaterThanOrEqualTo: fullName)
           .get();
 
-      List<UserModel> students = querySnapshot.docs.map((doc) {
-        return UserModel.fromMap(doc.data() as Map<String, dynamic>);
+      List<Student> students = querySnapshot.docs.map((doc) {
+        return Student.fromMap(doc.data() as Map<String, dynamic>);
       }).toList();
 
       return students;
@@ -89,4 +102,15 @@ class ScheduleServices {
       throw e.toString();
     }
   }
+
+  // Future<Schedule?> classById(String classID) async {
+  //   try {
+  //     final schedule =
+  //         await _firestore.collection('Schedules').doc(classID).get();
+
+  //     return Schedule.fromMap(schedule.data()!);
+  //   } catch (e) {
+  //     throw e.toString();
+  //   }
+  // }
 }

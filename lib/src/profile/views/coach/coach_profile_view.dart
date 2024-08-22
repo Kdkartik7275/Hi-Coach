@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_coach/core/common/widget/indicators/progress_indicators.dart';
@@ -56,7 +57,7 @@ class _CoachProfileViewState extends State<CoachProfileView> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: controller.coachInfoSelectedIndex.value == 0
-                      ? CoachResumeWidget(user: coach)
+                      ? CoachResumeWidget(coach: coach)
                       : controller.coachInfoSelectedIndex.value == 1
                           ? CoachPricingWidget(
                               controller: controller, coachID: coach.id)
@@ -82,7 +83,7 @@ class UserReview extends StatelessWidget {
       children: [
         ListTile(
           contentPadding: EdgeInsets.zero,
-          leading: const CircleAvatar(radius: 25),
+          leading: CircleAvatar(radius: 25.r),
           title: const Text('Kartik Dhiman'),
           subtitle: Row(
             children: [

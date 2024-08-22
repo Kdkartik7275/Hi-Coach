@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_coach/core/common/widget/divider/auth_divider.dart';
@@ -31,10 +32,10 @@ class LoginView extends StatelessWidget {
           isLoading: controller.isLoading.value,
           progressIndicator: circularProgress(context),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 24),
+            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 24.h),
             child: ListView(
               children: [
-                const SizedBox(height: 12),
+                SizedBox(height: 12.h),
                 TitleSubtitle(
                   title: AppStrings.login,
                   subtitle: Text(
@@ -42,7 +43,7 @@ class LoginView extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
-                const SizedBox(height: 50),
+                SizedBox(height: 50.h),
                 Form(
                     key: controller.loginFormKey.value,
                     child: Column(
@@ -53,7 +54,7 @@ class LoginView extends StatelessWidget {
                           hintText: 'Enter your email',
                           suffixIcon: const Icon(Icons.phone_android_rounded),
                         ),
-                        const SizedBox(height: 12),
+                        SizedBox(height: 12.h),
                         AuthField(
                           validator: (value) =>
                               TValidator.validatePassword(value),
@@ -67,11 +68,11 @@ class LoginView extends StatelessWidget {
                 Row(
                   children: [
                     Container(
-                      margin: const EdgeInsets.only(right: 5),
-                      height: 20,
-                      width: 20,
+                      margin: EdgeInsets.only(right: 5.w),
+                      height: 20.h,
+                      width: 20.w,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
+                          borderRadius: BorderRadius.circular(6.r),
                           border: Border.all(color: AppColors.border)),
                     ),
                     Text(
@@ -84,25 +85,25 @@ class LoginView extends StatelessWidget {
                     const Spacer(),
                     TextButton(
                         onPressed: () {},
-                        child: const Text(
+                        child: Text(
                           'Forget Password?',
-                          style:
-                              TextStyle(color: Color(0xffFF3951), fontSize: 12),
+                          style: TextStyle(
+                              color: const Color(0xffFF3951), fontSize: 12.sp),
                         )),
                   ],
                 ),
-                const SizedBox(height: 50),
+                SizedBox(height: 50.h),
                 const AuthDivider(),
-                const SizedBox(height: 20),
+                SizedBox(height: 20.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(AppImages.google),
-                    const SizedBox(width: 30),
+                    SizedBox(width: 30.w),
                     Image.asset(AppImages.facebook),
                   ],
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: 30.h),
                 AuthButton(
                   label: 'Continue',
                   onPressed: () {
@@ -112,20 +113,20 @@ class LoginView extends StatelessWidget {
                     }
                   },
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: 30.h),
                 Align(
                   alignment: Alignment.center,
                   child: RichText(
                     text: TextSpan(
                       children: [
-                        const TextSpan(
+                        TextSpan(
                           text: 'Don’t have an account? ',
-                          style: TextStyle(color: Colors.black, fontSize: 16),
+                          style:
+                              TextStyle(color: Colors.black, fontSize: 16.sp),
                         ),
                         TextSpan(
                           text: 'Sign up',
-                          style:
-                              const TextStyle(color: Colors.blue, fontSize: 18),
+                          style: TextStyle(color: Colors.blue, fontSize: 18.sp),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () => Get.to(() => const WhoYouAre(
                                   isSocialLogin: false,

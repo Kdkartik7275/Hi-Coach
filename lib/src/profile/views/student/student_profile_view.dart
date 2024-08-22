@@ -1,7 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hi_coach/core/common/widget/image/network_image.dart';
+import 'package:hi_coach/models/student.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 
 import 'package:hi_coach/core/common/widget/buttons/profile_info_button.dart';
@@ -10,7 +12,6 @@ import 'package:hi_coach/core/common/widget/heading/heading.dart';
 import 'package:hi_coach/core/common/widget/indicators/progress_indicators.dart';
 import 'package:hi_coach/core/conifg/app_images.dart';
 import 'package:hi_coach/core/conifg/colors.dart';
-import 'package:hi_coach/models/user.dart';
 import 'package:hi_coach/src/profile/controller/profile_controller.dart';
 
 class StudentProfileView extends StatelessWidget {
@@ -26,19 +27,13 @@ class StudentProfileView extends StatelessWidget {
           isLoading: controller.profileLoading.value,
           progressIndicator: circularProgress(context),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
+            padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 20.h),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Profile',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineSmall!
-                          .copyWith(fontWeight: FontWeight.w600)),
-
                   // PROFILE HEADER
-                  const SizedBox(height: 20),
+
                   StudentProfileHeader(
                     student: user!,
                     age: controller.calculateAge(user.dob!),
@@ -47,15 +42,15 @@ class StudentProfileView extends StatelessWidget {
                   // EDIT PROFILE BUTTON AND (CONTACT AND PROGESS BUTTON)
 
                   // BUTTON
-                  const SizedBox(height: 30),
+                  SizedBox(height: 30.h),
                   InkWell(
                     onTap: () {},
                     child: Container(
-                      height: 25,
-                      width: 100,
+                      height: 25.h,
+                      width: 100.w,
                       decoration: BoxDecoration(
                           color: AppColors.border,
-                          borderRadius: BorderRadius.circular(8)),
+                          borderRadius: BorderRadius.circular(8.r)),
                       child: Center(
                         child: Text(
                           'Edit Profile',
@@ -63,28 +58,28 @@ class StudentProfileView extends StatelessWidget {
                           style: Theme.of(context)
                               .textTheme
                               .titleSmall!
-                              .copyWith(fontSize: 12),
+                              .copyWith(fontSize: 12.sp),
                         ),
                       ),
                     ),
                   ),
 
                   // CONATCT AND PROGRESS BUTTONS
-                  const SizedBox(height: 15),
+                  SizedBox(height: 15.h),
 
                   const ContactAndProgressButtons(),
 
                   // SPORTS
-                  const SizedBox(height: 15),
+                  SizedBox(height: 15.h),
 
                   Row(
                     children: List.generate(
                         user.sports.length,
                         (index) => TRoundedContainer(
-                              radius: 10,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 4),
-                              margin: const EdgeInsets.only(right: 10),
+                              radius: 10.r,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 20.w, vertical: 4.h),
+                              margin: EdgeInsets.only(right: 10.w),
                               backgroundColor: AppColors.filledTextField,
                               child: Center(
                                 child: Text(
@@ -99,7 +94,7 @@ class StudentProfileView extends StatelessWidget {
                   ),
 
                   // BIO
-                  const SizedBox(height: 25),
+                  SizedBox(height: 25.h),
                   TitleSubtitle(padding: EdgeInsets.zero, title: 'Bio'),
                   Text(
                       'Consequat velit qui adipisicing sunt do rependerit ad laborum tempor ullamco exercitation. Ullamco tempor adipisicing et voluptate duis sit esse aliqua',
@@ -109,7 +104,7 @@ class StudentProfileView extends StatelessWidget {
                           .copyWith(color: AppColors.text)),
 
                   // UPCOMING CLASSES
-                  const SizedBox(height: 25),
+                  SizedBox(height: 25.h),
                   TitleSubtitle(padding: EdgeInsets.zero, title: 'Upcoming'),
                   const SizedBox(height: 10),
 
@@ -133,16 +128,15 @@ class UpcomingClassWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TRoundedContainer(
-      height: 85,
       width: double.infinity,
-      margin: const EdgeInsets.only(bottom: 15),
+      margin: EdgeInsets.only(bottom: 15.h),
       backgroundColor: AppColors.filled,
       child: Row(
         children: [
           // DATE
           TRoundedContainer(
-            height: 85,
-            width: 100,
+            height: 85.h,
+            width: 100.w,
             backgroundColor: AppColors.primary,
             child: Center(
               child: Text(
@@ -158,7 +152,7 @@ class UpcomingClassWidget extends StatelessWidget {
           // SPORT AND STATUS
 
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -170,7 +164,7 @@ class UpcomingClassWidget extends StatelessWidget {
                       style: Theme.of(context)
                           .textTheme
                           .titleSmall!
-                          .copyWith(color: AppColors.text, fontSize: 16),
+                          .copyWith(color: AppColors.text, fontSize: 16.sp),
                     ),
                     Text(
                       'with Patty',
@@ -191,7 +185,7 @@ class UpcomingClassWidget extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleSmall!.copyWith(
                       color: AppColors.text,
                       fontWeight: FontWeight.w500,
-                      fontSize: 15),
+                      fontSize: 15.sp),
                 )
               ],
             ),
@@ -235,12 +229,12 @@ class ContactAndProgressButtons extends StatelessWidget {
 
 class StudentProfileHeader extends StatelessWidget {
   const StudentProfileHeader({
-    Key? key,
+    super.key,
     required this.student,
     required this.age,
-  }) : super(key: key);
+  });
 
-  final UserModel student;
+  final Student student;
   final int age;
 
   @override
@@ -249,25 +243,25 @@ class StudentProfileHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          height: 100,
-          width: 100,
+          height: 100.h,
+          width: 100.w,
           decoration: const BoxDecoration(
             shape: BoxShape.circle,
             color: AppColors.filled,
           ),
           child: student.profileURL!.isNotEmpty
               ? ClipRRect(
-                  borderRadius: BorderRadius.circular(100),
+                  borderRadius: BorderRadius.circular(100.r),
                   child: TCachedNetworkImage(
                       profileURL: student.profileURL!.first,
-                      height: 100,
-                      width: 100),
+                      height: 100.h,
+                      width: 100.w),
                 )
               : Center(
                   child: Text(student.fullName.substring(0, 2).toUpperCase()),
                 ),
         ),
-        const SizedBox(width: 25),
+        SizedBox(width: 10.w),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

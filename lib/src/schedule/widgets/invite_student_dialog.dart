@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_coach/core/common/widget/containers/rounded_container.dart';
@@ -27,7 +28,7 @@ class InviteStudentDialog extends StatelessWidget {
         child: TRoundedContainer(
           backgroundColor: const Color(0xff333333),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-          height: 400,
+          height: 400.h,
           width: double.infinity,
           child: Column(
             children: [
@@ -36,9 +37,9 @@ class InviteStudentDialog extends StatelessWidget {
                 child: TextButton(
                     onPressed: () => controller.addStudentsToInvites(
                         controller.selectedStudents.value),
-                    child: const Text(
+                    child: Text(
                       'Add',
-                      style: TextStyle(color: Colors.blue, fontSize: 16),
+                      style: TextStyle(color: Colors.blue, fontSize: 16.sp),
                     )),
               ),
               SearchStudentField(onChanged: (query) {

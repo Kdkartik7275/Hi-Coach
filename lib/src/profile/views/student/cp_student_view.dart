@@ -1,9 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hi_coach/core/common/widget/buttons/profile_button.dart';
 import 'package:hi_coach/core/common/widget/indicators/progress_indicators.dart';
-import 'package:hi_coach/models/user.dart';
+import 'package:hi_coach/core/conifg/app_pages.dart';
+import 'package:hi_coach/models/coach.dart';
 
 import 'package:hi_coach/src/profile/controller/profile_controller.dart';
 import 'package:hi_coach/src/profile/widgets/coach/about_tabs.dart';
@@ -30,9 +32,9 @@ class CoachProfileStudentView extends StatelessWidget {
     height = size.height;
     width = size.width;
     return Scaffold(
-      body: FutureBuilder(
-          future: controller.fetchUserById(coachID),
-          builder: (context, AsyncSnapshot<UserModel?> snapshot) {
+      body: FutureBuilder<Coach?>(
+          future: controller.fetchCoachByID(coachID),
+          builder: (context, AsyncSnapshot<Coach?> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: circularProgress(context));
             }
@@ -47,16 +49,20 @@ class CoachProfileStudentView extends StatelessWidget {
                         coach: coach,
                         controller: controller,
                         backRequired: true),
-                    const SizedBox(height: 25),
+                    SizedBox(height: 25.h),
 
                     // ONLY STUDENT CAN SEE THESE
                     const CoachContactInfoButtons(),
-                    const SizedBox(height: 25),
+                    SizedBox(height: 25.h),
                     ProfileButton(
-                        size: Size(width * 0.85, height * 0.075),
+                        size: Size(width * 0.85.w, height * 0.075.h),
                         label: 'Book Now',
-                        onPressed: () {}),
-                    const SizedBox(height: 25),
+                        onPressed: () =>
+                            Get.toNamed(Routes.SELECTDATE, arguments: {
+                              'coach': coach,
+                              'rating': 0 // AVERAGE RATING OF COACH
+                            })),
+                    SizedBox(height: 25.h),
 
                     // ---------- COACH INFORMATION TABS ---------------
                     CoachAboutTabs(controller: controller),
@@ -65,7 +71,7 @@ class CoachProfileStudentView extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: controller.coachInfoSelectedIndex.value == 0
-                          ? CoachResumeWidget(user: coach)
+                          ? CoachResumeWidget(coach: coach)
                           : controller.coachInfoSelectedIndex.value == 1
                               ? CoachPricingWidget(
                                   controller: controller, coachID: coach.id)

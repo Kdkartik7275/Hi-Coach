@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hi_coach/core/conifg/colors.dart';
 
@@ -14,5 +15,7 @@ class TAppBarTheme {
       iconTheme: const IconThemeData(color: AppColors.black),
       actionsIconTheme: const IconThemeData(color: AppColors.black),
       titleTextStyle: GoogleFonts.raleway(
-          fontSize: 19, fontWeight: FontWeight.w700, color: AppColors.black));
+          fontSize: 19.sp,
+          fontWeight: FontWeight.w700,
+          color: AppColors.black));
 }

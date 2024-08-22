@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hi_coach/core/common/widget/containers/rounded_container.dart';
 import 'package:hi_coach/core/conifg/colors.dart';
 
@@ -11,36 +12,36 @@ class BookingsView extends StatelessWidget {
       body: DefaultTabController(
         length: 2,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+          padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 16.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // BOOKING TEXT
-              const SizedBox(height: 15),
+              SizedBox(height: 15.h),
               Text('Your Bookings',
                   style: Theme.of(context)
                       .textTheme
                       .headlineMedium!
-                      .copyWith(fontSize: 22)),
-              const SizedBox(height: 35),
+                      .copyWith(fontSize: 22.sp)),
+              SizedBox(height: 35.h),
 
               // ---------------- BOOKINGS TAB BAR -------------------
-              const TabBar(
+              TabBar(
                 dividerColor: AppColors.white,
                 indicatorColor: AppColors.primary,
                 indicatorSize: TabBarIndicatorSize.tab,
                 labelStyle: TextStyle(
                     color: AppColors.primary,
-                    fontSize: 15,
+                    fontSize: 15.sp,
                     letterSpacing: 0.5,
                     fontWeight: FontWeight.w700),
                 unselectedLabelStyle: TextStyle(
                     color: AppColors.text,
-                    fontSize: 15,
+                    fontSize: 15.sp,
                     letterSpacing: 0.5,
                     fontWeight: FontWeight.w700),
-                labelPadding: EdgeInsets.only(bottom: 10),
-                tabs: [
+                labelPadding: EdgeInsets.only(bottom: 10.h),
+                tabs: const [
                   Text('Past'),
                   Text('Upcoming'),
                 ],
@@ -55,7 +56,7 @@ class BookingsView extends StatelessWidget {
                     itemCount: 10,
                     itemBuilder: (context, index) {
                       return Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
+                        padding: EdgeInsets.fromLTRB(20.w, 20.h, 20.w, 10.h),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,12 +79,12 @@ class BookingsView extends StatelessWidget {
                                         style: Theme.of(context)
                                             .textTheme
                                             .titleLarge),
-                                    const SizedBox(width: 4),
-                                    const Text('•', // Middle dot character
+                                    SizedBox(width: 4.w),
+                                    Text('•', // Middle dot character
                                         style: TextStyle(
-                                            fontSize: 16.0,
+                                            fontSize: 16.0.sp,
                                             fontWeight: FontWeight.bold)),
-                                    const SizedBox(width: 4),
+                                    SizedBox(width: 4.w),
                                     Text('5.0km',
                                         style: Theme.of(context)
                                             .textTheme
@@ -101,7 +102,7 @@ class BookingsView extends StatelessWidget {
                                         Theme.of(context).textTheme.titleLarge),
 
                                 // DATE AND PRICE
-                                const SizedBox(height: 3),
+                                SizedBox(height: 3.h),
 
                                 Row(
                                   children: [
@@ -111,14 +112,14 @@ class BookingsView extends StatelessWidget {
                                             .titleLarge!
                                             .copyWith(
                                                 fontWeight: FontWeight.w600)),
-                                    const SizedBox(width: 4),
+                                    SizedBox(width: 4.w),
                                     Text('•', // Middle dot character
                                         style: Theme.of(context)
                                             .textTheme
                                             .titleLarge!
                                             .copyWith(
                                                 fontWeight: FontWeight.w600)),
-                                    const SizedBox(width: 4),
+                                    SizedBox(width: 4.w),
                                     Text('\$${200}',
                                         style: Theme.of(context)
                                             .textTheme
@@ -132,13 +133,13 @@ class BookingsView extends StatelessWidget {
 
                             // VIEW BOOKING BUTTON
 
-                            const TRoundedContainer(
-                              height: 55,
-                              width: 55,
-                              radius: 10,
+                            TRoundedContainer(
+                              height: 55.h,
+                              width: 55.w,
+                              radius: 10.r,
                               backgroundColor: AppColors.filledTextField,
                               alignment: Alignment.center,
-                              child: Text('View'),
+                              child: const Text('View'),
                             )
                           ],
                         ),

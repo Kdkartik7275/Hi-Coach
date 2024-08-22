@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_coach/core/common/widget/containers/rounded_container.dart';
@@ -9,21 +10,21 @@ import 'package:hi_coach/src/profile/controller/edit_profile_controller.dart';
 
 class AddPackageDialog extends StatelessWidget {
   const AddPackageDialog({
-    Key? key,
+    super.key,
     required this.controller,
-  }) : super(key: key);
+  });
   final EditProfileController controller;
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      insetPadding: const EdgeInsets.symmetric(horizontal: 20),
+      insetPadding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Container(
-        height: 400,
+        height: 400.h,
         width: double.infinity,
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(12.r),
           color: AppColors.white,
         ),
         child: Obx(
@@ -53,11 +54,11 @@ class AddPackageDialog extends StatelessWidget {
                       children: [
                         Text('Title',
                             style: Theme.of(context).textTheme.titleMedium),
-                        const SizedBox(width: 30),
+                        SizedBox(width: 30.w),
                         Expanded(
                           child: Container(
-                            height: 45,
-                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            height: 45.h,
+                            padding: EdgeInsets.symmetric(horizontal: 12.w),
                             color: AppColors.filled,
                             child: Row(
                               mainAxisAlignment: controller.prices.value.isEmpty
@@ -95,7 +96,7 @@ class AddPackageDialog extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20.h),
 
                     // HOURS OF SESSION
                     Row(
@@ -106,10 +107,9 @@ class AddPackageDialog extends StatelessWidget {
                         PopupMenuButton(
                             color: AppColors.white,
                             child: TRoundedContainer(
-                              height: 40,
-                              width: 70,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8),
+                              height: 40.h,
+                              width: 70.w,
+                              padding: EdgeInsets.symmetric(horizontal: 8.w),
                               backgroundColor: AppColors.filled,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
@@ -132,14 +132,14 @@ class AddPackageDialog extends StatelessWidget {
                             }),
                       ],
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20.h),
 
                     // DISCOUNT IN %
                     Row(
                       children: [
                         Text('Discount (in %)',
                             style: Theme.of(context).textTheme.titleMedium),
-                        const SizedBox(width: 30),
+                        SizedBox(width: 30.w),
                         Expanded(
                           child: TextFormField(
                             controller: controller.discount,
@@ -163,14 +163,14 @@ class AddPackageDialog extends StatelessWidget {
               ),
 
               // --------------  ADD BUTTON --------------------
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h),
               GestureDetector(
                 onTap: () => controller.addPackage(),
                 child: Align(
                     alignment: Alignment.bottomRight,
                     child: TRoundedContainer(
-                      width: 80,
-                      height: 40,
+                      width: 80.h,
+                      height: 40.w,
                       backgroundColor: AppColors.primary,
                       alignment: Alignment.center,
                       child: Text(

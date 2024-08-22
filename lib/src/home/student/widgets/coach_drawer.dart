@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hi_coach/core/common/widget/image/network_image.dart';
 import 'package:hi_coach/core/conifg/colors.dart';
@@ -23,26 +24,26 @@ class CoachDrawer extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                  height: 80,
-                  width: 80,
+                  height: 80.h,
+                  width: 80.w,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: AppColors.filled,
                   ),
                   child: user.profileURL!.isNotEmpty
                       ? ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
+                          borderRadius: BorderRadius.circular(100.r),
                           child: TCachedNetworkImage(
                               profileURL: user.profileURL!.first,
-                              height: 80,
-                              width: 80),
+                              height: 80.h,
+                              width: 80.w),
                         )
                       : Center(
                           child:
                               Text(user.fullName.substring(0, 2).toUpperCase()),
                         ),
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: 12.h),
                 Text(
                   user.fullName,
                   style: Theme.of(context).textTheme.titleMedium,

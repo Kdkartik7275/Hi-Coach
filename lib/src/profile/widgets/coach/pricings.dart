@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_coach/core/common/widget/containers/rounded_container.dart';
@@ -8,9 +9,9 @@ import 'package:hi_coach/src/profile/controller/edit_profile_controller.dart';
 
 class Pricings extends StatelessWidget {
   const Pricings({
-    Key? key,
+    super.key,
     required this.controller,
-  }) : super(key: key);
+  });
   final EditProfileController controller;
 
   @override
@@ -29,11 +30,11 @@ class Pricings extends StatelessWidget {
                 Text('${index + 1}. ',
                     style: Theme.of(context).textTheme.titleMedium),
                 Text('Title', style: Theme.of(context).textTheme.titleMedium),
-                const SizedBox(width: 6),
+                SizedBox(width: 6.w),
                 TRoundedContainer(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  height: 35,
-                  width: 120,
+                  padding: EdgeInsets.symmetric(horizontal: 12.w),
+                  height: 35.h,
+                  width: 120.w,
                   alignment: Alignment.centerLeft,
                   backgroundColor: AppColors.filled,
                   child: Text(price.title,
@@ -42,48 +43,46 @@ class Pricings extends StatelessWidget {
                       style: Theme.of(context)
                           .textTheme
                           .titleSmall!
-                          .copyWith(fontSize: 16)),
+                          .copyWith(fontSize: 16.sp)),
                 ),
-                const SizedBox(width: 6),
+                SizedBox(width: 6.w),
                 Text('Pax',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .copyWith(fontSize: 16, fontWeight: FontWeight.w700)),
-                const SizedBox(width: 6),
+                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                        fontSize: 16.sp, fontWeight: FontWeight.w700)),
+                SizedBox(width: 6.w),
                 TRoundedContainer(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  height: 35,
+                  padding: EdgeInsets.symmetric(horizontal: 10.w),
+                  height: 35.h,
                   alignment: Alignment.center,
                   backgroundColor: AppColors.filled,
                   child: Text(price.pax.toString(),
                       style: Theme.of(context)
                           .textTheme
                           .titleSmall!
-                          .copyWith(fontSize: 16)),
+                          .copyWith(fontSize: 16.sp)),
                 ),
-                const SizedBox(width: 6),
+                SizedBox(width: 6.w),
                 Text('Price', style: Theme.of(context).textTheme.titleMedium),
-                const SizedBox(width: 6),
+                SizedBox(width: 6.w),
                 TRoundedContainer(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  height: 35,
+                  padding: EdgeInsets.symmetric(horizontal: 10.w),
+                  height: 35.h,
                   // width: 50,
-                  radius: 10,
+                  radius: 10.r,
                   alignment: Alignment.centerLeft,
                   backgroundColor: AppColors.filled,
                   child: Text('\$ ${price.price.toString()}',
                       style: Theme.of(context)
                           .textTheme
                           .titleSmall!
-                          .copyWith(fontSize: 16)),
+                          .copyWith(fontSize: 16.sp)),
                 ),
               ],
             ),
           );
         },
         separatorBuilder: (BuildContext context, int index) {
-          return const SizedBox(height: 15);
+          return SizedBox(height: 15.h);
         },
       ),
     );

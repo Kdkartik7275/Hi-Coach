@@ -1,4 +1,7 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:hi_coach/src/bookings/view/book_class/select_date_view.dart';
+import 'package:hi_coach/src/notifications/bindings/notification_binding.dart';
+import 'package:hi_coach/src/notifications/view/notifications_view.dart';
 import 'package:hi_coach/src/splash/view/splash_view.dart';
 import 'package:hi_coach/src/auth/binding/login_binding.dart';
 import 'package:hi_coach/src/auth/binding/signup_binding.dart';
@@ -22,6 +25,15 @@ class AppPages {
       name: _Paths.SIGN_UP,
       page: () => const SignUpView(),
       binding: SignupBinding(),
+    ),
+    GetPage(
+      name: _Paths.NOTIFICATIONS,
+      page: () => const NotificationsView(),
+      binding: NotificationBinding(),
+    ),
+    GetPage(
+      name: _Paths.SELECTDATE,
+      page: () => const SelectDateView(),
     ),
   ];
 }

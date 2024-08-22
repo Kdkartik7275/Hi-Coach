@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:hi_coach/core/common/widget/containers/rounded_container.dart';
 import 'package:hi_coach/core/conifg/colors.dart';
@@ -23,9 +24,9 @@ class CoachPackageInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return TRoundedContainer(
       width: double.infinity,
-      height: 80,
-      margin: const EdgeInsets.only(bottom: 15),
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      height: 80.h,
+      margin: EdgeInsets.only(bottom: 15.h),
+      padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
       backgroundColor: AppColors.filled,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -37,15 +38,15 @@ class CoachPackageInfo extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium!
-                      .copyWith(fontSize: 17, color: AppColors.text)),
+                      .copyWith(fontSize: 17.sp, color: AppColors.text)),
               Row(
                 children: [
                   Text('\$$actualPrice',
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                          fontSize: 17,
+                          fontSize: 17.sp,
                           decoration: TextDecoration.lineThrough,
                           color: AppColors.text)),
-                  const SizedBox(width: 10),
+                  SizedBox(width: 10.w),
                   Text('\$$discountedPrice',
                       style:
                           Theme.of(context).textTheme.titleMedium!.copyWith()),
@@ -56,10 +57,10 @@ class CoachPackageInfo extends StatelessWidget {
           GestureDetector(
             onTap: onpressed,
             child: TRoundedContainer(
-              height: 70,
-              width: 70,
+              height: 70.h,
+              width: 70.w,
               backgroundColor: AppColors.primary,
-              radius: 10,
+              radius: 10.r,
               child: Center(
                 child: Text(
                   'Book Now',
@@ -67,7 +68,7 @@ class CoachPackageInfo extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium!
-                      .copyWith(fontSize: 17),
+                      .copyWith(fontSize: 17.sp),
                 ),
               ),
             ),

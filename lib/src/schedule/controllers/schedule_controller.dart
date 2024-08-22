@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:hi_coach/core/conifg/colors.dart';
-import 'package:hi_coach/models/schedule.dart';
-import 'package:hi_coach/models/user.dart';
+import 'package:hi_coach/core/utils/helpers/functions.dart';
+import 'package:hi_coach/models/student.dart';
 import 'package:hi_coach/services/schedule/schedule_services.dart';
 import 'package:hi_coach/src/schedule/views/calender_view.dart';
 import 'package:intl/intl.dart';
@@ -31,11 +31,11 @@ class ScheduleController extends GetxController {
   var minAge = '3'.obs;
   var maxAge = '3'.obs;
 
-  var selectedStudents = Rx<List<UserModel>>([]);
-  var invitedStudents = Rx<List<UserModel>>([]);
-  var searchedStudents = Rx<List<UserModel>>([]);
+  var selectedStudents = Rx<List<Student>>([]);
+  var invitedStudents = Rx<List<Student>>([]);
+  var searchedStudents = Rx<List<Student>>([]);
 
-  var schedules = Rx<List<Schedule>>([]);
+  // var schedules = Rx<List<Schedule>>([]);
 
   var meetings = Rx<List<Meeting>>([]);
 
@@ -73,120 +73,122 @@ class ScheduleController extends GetxController {
   // FETCH SCHEDULES
 
   void fetchSchedules(String coachID) async {
-    try {
-      loading.value = true;
-      final list = await services.getAllSchedules(coachID);
-      schedules.value = list;
-      getMeetingDataSource();
-      loading.value = false;
-    } catch (e) {
-      loading.value = false;
-      Get.snackbar('Erro', e.toString(), backgroundColor: AppColors.white);
-    }
+    // try {
+    //   loading.value = true;
+    //   final list = await services.getAllSchedules(coachID);
+    //   schedules.value = list;
+    //   getMeetingDataSource();
+    //   loading.value = false;
+    // } catch (e) {
+    //   loading.value = false;
+    //   Get.snackbar('Erro', e.toString(), backgroundColor: AppColors.white);
+    // }
   }
 
   // Get Meeting Data Source
   void getMeetingDataSource() {
-    loading.value = true;
-    meetings.value = []; // Clear previous meetings before adding new ones
-    for (var schedule in schedules.value) {
-      String title = '';
-      DateTime startTime = schedule.startTime!.toDate();
-      DateTime endTime = schedule.endTime!.toDate();
-      List requests = schedule.requests!;
-      List confirmed = schedule.confirmedStudents!;
-      List invites = schedule.invited!;
-      Color color;
+    // loading.value = true;
+    // meetings.value = []; // Clear previous meetings before adding new ones
+    // for (var schedule in schedules.value) {
+    //   String title = '';
+    //   DateTime startTime = schedule.startTime.toDate();
+    //   DateTime endTime = schedule.endTime.toDate();
+    //   List requests = schedule.requests;
+    //   List confirmed = schedule.confirmedStudents;
+    //   List invites = schedule.invited;
+    //   Color color;
 
-      if (requests.isNotEmpty) {
-        title = '${requests.length}+ Pendings';
-        color = Colors.amber.shade100;
-      } else if (confirmed.length == schedule.pax) {
-        if (schedule.pax! > 2) {
-          title = 'Grp';
-        } else {
-          title = schedule.title!;
-        }
-        color = AppColors.primary;
-      } else if (invites.isNotEmpty) {
-        title = ' ${invites.length}/${schedule.pax}';
-        color = Colors.purple.shade100;
-      } else {
-        title = ' ${confirmed.length}/${schedule.pax}';
-        color = Colors.purple.shade100;
-      }
+    //   if (requests.isNotEmpty) {
+    //     title = '${requests.length}+ Pendings';
+    //     color = Colors.amber.shade100;
+    //   } else if (confirmed.length == schedule.pax) {
+    //     if (schedule.pax > 2) {
+    //       title = 'Grp';
+    //     } else {
+    //       title = schedule.title;
+    //     }
+    //     color = AppColors.primary;
+    //   } else if (invites.isNotEmpty) {
+    //     title = ' ${invites.length}/${schedule.pax}';
+    //     color = Colors.purple.shade100;
+    //   } else {
+    //     title = ' ${confirmed.length}/${schedule.pax}';
+    //     color = Colors.purple.shade100;
+    //   }
 
-      meetings.value.add(Meeting(title, startTime, endTime, color));
-    }
-    loading.value = false;
+    //   meetings.value.add(Meeting(title, startTime, endTime, color));
+    // }
+    // loading.value = false;
   }
 
   // ADD SCHEDULE FUNCTION
 
   void addSchedule(String coachID) async {
-    if (title.text.isNotEmpty && location.text.isNotEmpty) {
-      try {
-        loading.value = true;
-        String scheduleID = const Uuid().v4();
-        List<String> ids =
-            invitedStudents.value.map((student) => student.id).toList();
+    // if (title.text.isNotEmpty && location.text.isNotEmpty) {
+    //   try {
+    //     loading.value = true;
+    //     String scheduleID = const Uuid().v4();
+    //     List<String> ids =
+    //         invitedStudents.value.map((student) => student.id).toList();
 
-        DateTime classStartTime =
-            _getClassTime(startDate.value, startTime.value);
-        DateTime classEndTime = _getClassTime(endDate.value, endTime.value);
-        Schedule newSchedule = Schedule(
-            id: scheduleID,
-            title: title.text,
-            location: location.text,
-            sport: selectedSport.value,
-            startTime: Timestamp.fromDate(classStartTime),
-            endTime: Timestamp.fromDate(classEndTime),
-            repeat: repeatValue.value,
-            pax: int.parse(pax.value),
-            minAge: int.parse(minAge.value),
-            maxAge: int.parse(maxAge.value),
-            invited: ids,
-            confirmedStudents: [],
-            requests: [],
-            description: desciption.text);
-        await services.addSchedule(newSchedule, coachID);
-        if (invitedStudents.value != []) {
-          // SEND JOINING REQUESTS TO STUDENTS
-          await inviteStudents(ids, newSchedule, coachID);
-        }
+    //     DateTime classStartTime =
+    //         _getClassTime(startDate.value, startTime.value);
+    //     DateTime classEndTime = _getClassTime(endDate.value, endTime.value);
+    //     Schedule newSchedule = Schedule(
+    //         id: scheduleID,
+    //         title: title.text,
+    //         location: location.text,
+    //         sport: selectedSport.value,
+    //         startTime: Timestamp.fromDate(classStartTime),
+    //         endTime: Timestamp.fromDate(classEndTime),
+    //         repeat: repeatValue.value,
+    //         pax: int.parse(pax.value),
+    //         minAge: int.parse(minAge.value),
+    //         maxAge: int.parse(maxAge.value),
+    //         invited: ids,
+    //         confirmedStudents: [],
+    //         requests: [],
+    //         description: desciption.text,
+    //         coachID: coachID);
+    //     await services.addSchedule(newSchedule);
+    //     if (invitedStudents.value != []) {
+    //       // SEND JOINING REQUESTS TO STUDENTS
+    //       await inviteStudents(ids, newSchedule, coachID);
+    //     }
 
-        loading.value = false;
-        Get.snackbar('Successfull', 'Class uploaded ',
-            backgroundColor: AppColors.green);
-      } catch (e) {
-        loading.value = false;
-      }
-    } else {
-      Get.snackbar('', '',
-          backgroundColor: AppColors.filled,
-          titleText: Text('Error',
-              style: Theme.of(Get.context!).textTheme.titleMedium),
-          messageText: Text('All Fields are Required',
-              style: Theme.of(Get.context!)
-                  .textTheme
-                  .titleSmall!
-                  .copyWith(color: Colors.red)));
-    }
+    //     loading.value = false;
+    //     Get.snackbar('Successfull', 'Class uploaded ',
+    //         backgroundColor: AppColors.green);
+    //   } catch (e) {
+    //     loading.value = false;
+    //   }
+    // } else {
+    //   Get.snackbar('', '',
+    //       backgroundColor: AppColors.filled,
+    //       titleText: Text('Error',
+    //           style: Theme.of(Get.context!).textTheme.titleMedium),
+    //       messageText: Text('All Fields are Required',
+    //           style: Theme.of(Get.context!)
+    //               .textTheme
+    //               .titleSmall!
+    //               .copyWith(color: Colors.red)));
+    // }
   }
 
-  Future<void> inviteStudents(
-      List<String> studentIDs, Schedule schedule, String coachID) async {
-    try {
-      loading.value = true;
+  // Future<void> inviteStudents(
+  //     List<String> studentIDs, Schedule schedule, String coachID) async {
+  //   try {
+  //     loading.value = true;
 
-      await services.inviteStudents(studentIDs, schedule, coachID);
-      loading.value = false;
-    } catch (e) {
-      loading.value = false;
-    }
-  }
+  //     await services.inviteStudents(
+  //         studentIDs, schedule.id, coachID, schedule.pax);
+  //     loading.value = false;
+  //   } catch (e) {
+  //     loading.value = false;
+  //   }
+  // }
 
-  void selectStudent(UserModel student) {
+  void selectStudent(Student student) {
     if (selectedStudents.value.contains(student)) {
       loading.value = true;
       selectedStudents.value.removeWhere((st) => st.id == student.id);
@@ -200,7 +202,7 @@ class ScheduleController extends GetxController {
     loading.value = false;
   }
 
-  void addStudentsToInvites(List<UserModel> students) {
+  void addStudentsToInvites(List<Student> students) {
     if (students != []) {
       loading.value = true;
       invitedStudents.value.addAll(students);
@@ -210,7 +212,7 @@ class ScheduleController extends GetxController {
     Get.back();
   }
 
-  void removeStudentFromInvites(UserModel student) {
+  void removeStudentFromInvites(Student student) {
     if (invitedStudents.value.contains(student)) {
       loading.value = true;
       invitedStudents.value.removeWhere((st) => st.id == student.id);
@@ -239,11 +241,4 @@ class ScheduleController extends GetxController {
   DateTime _getClassTime(DateTime date, TimeOfDay time) {
     return DateTime(date.year, date.month, date.day, time.hour, time.minute);
   }
-}
-
-String formatTimeOfDay(TimeOfDay time) {
-  final now = DateTime.now();
-  final dt = DateTime(now.year, now.month, now.day, time.hour, time.minute);
-  final format = DateFormat.jm(); // 'jm' will format to '1:38 AM' or '1:38 PM'
-  return format.format(dt);
 }

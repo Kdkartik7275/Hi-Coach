@@ -3,12 +3,12 @@ import 'package:hi_coach/core/common/widget/containers/rounded_container.dart';
 
 class LinearRatingIndicator extends StatelessWidget {
   const LinearRatingIndicator({
-    Key? key,
+    super.key,
     required this.rating,
     required this.width,
-  }) : super(key: key);
+  });
   final int rating;
-  final int width;
+  final double width;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class LinearRatingIndicator extends StatelessWidget {
           size: 15,
         ),
         TRoundedContainer(
-          width: width.toDouble(),
+          width: width,
           height: 6,
           backgroundColor: Colors.green.shade900,
         ),

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class InfoText extends StatelessWidget {
   InfoText({
-    Key? key,
+    super.key,
     required this.label,
     required this.isSelected,
     this.onpressed,
-  }) : super(key: key);
+  });
 
   final String label;
   Function()? onpressed;
@@ -18,7 +19,7 @@ class InfoText extends StatelessWidget {
       onTap: onpressed,
       child: Text(label,
           style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-              fontSize: 20,
+              fontSize: 20.sp,
               decoration: isSelected ? TextDecoration.underline : null)),
     );
   }

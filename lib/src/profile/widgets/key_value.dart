@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hi_coach/core/conifg/colors.dart';
 
 class KeyValue extends StatelessWidget {
   const KeyValue({
-    Key? key,
+    super.key,
     required this.title,
     required this.hintText,
     this.controller,
-  }) : super(key: key);
+  });
 
   final String title;
   final String hintText;
@@ -22,7 +23,7 @@ class KeyValue extends StatelessWidget {
                 .textTheme
                 .titleMedium!
                 .copyWith(fontWeight: FontWeight.w400)),
-        const SizedBox(width: 30),
+        SizedBox(width: 30.w),
         Expanded(
             child: TextField(
           controller: controller,

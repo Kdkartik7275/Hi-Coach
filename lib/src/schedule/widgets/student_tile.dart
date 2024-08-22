@@ -1,9 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:hi_coach/core/common/widget/image/network_image.dart';
-import 'package:hi_coach/core/conifg/colors.dart';
-import 'package:hi_coach/models/user.dart';
+import 'package:hi_coach/models/student.dart';
 
 class InvitedStudentTile extends StatelessWidget {
   const InvitedStudentTile({
@@ -14,7 +14,7 @@ class InvitedStudentTile extends StatelessWidget {
     this.isNameRequired = true,
   });
 
-  final UserModel student;
+  final Student student;
   final Function()? onTap;
   final Function()? onLongPress;
   final bool isNameRequired;
@@ -30,22 +30,19 @@ class InvitedStudentTile extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(100),
+              borderRadius: BorderRadius.circular(100.r),
               child: TCachedNetworkImage(
                 profileURL: student.profileURL![0],
-                height: 60,
-                width: 60,
+                height: 60.h,
+                width: 60.w,
               ),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10.h),
             if (isNameRequired)
               Flexible(
                 child: Text(
                   student.fullName,
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleSmall!
-                      .copyWith(color: AppColors.white),
+                  style: Theme.of(context).textTheme.titleSmall!,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,
                 ),

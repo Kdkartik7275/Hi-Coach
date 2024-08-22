@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hi_coach/core/common/widget/containers/rounded_container.dart';
 import 'package:hi_coach/core/conifg/colors.dart';
@@ -17,28 +18,28 @@ class EditAndShareProfileButton extends StatelessWidget {
         // EDIT PROFILE
         GestureDetector(
           onTap: () => Get.to(() => const CoachEditProfileView()),
-          child: const TRoundedContainer(
+          child: TRoundedContainer(
             backgroundColor: AppColors.text,
-            height: 30,
-            width: 100,
-            radius: 5,
-            child: Center(
+            height: 30.h,
+            width: 100.w,
+            radius: 5.r,
+            child: const Center(
                 child: Text(
               'Edit Profile',
               style: TextStyle(color: AppColors.white),
             )),
           ),
         ),
-        const SizedBox(width: 10),
+        SizedBox(width: 10.w),
         // SHARE PROFILE
         GestureDetector(
           onTap: () => Get.to(() => const CoachEditProfileView()),
-          child: const TRoundedContainer(
+          child: TRoundedContainer(
             backgroundColor: AppColors.filled,
-            height: 30,
-            width: 100,
-            radius: 5,
-            child: Center(
+            height: 30.h,
+            width: 100.w,
+            radius: 5.r,
+            child: const Center(
                 child: Text(
               'Share Profile',
               style: TextStyle(color: AppColors.black),

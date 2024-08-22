@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hi_coach/core/conifg/colors.dart';
 
 /* -- Light & Dark Elevated Button Themes -- */
 class TElevatedButtonTheme {
-  TElevatedButtonTheme._(); //To avoid creating instances
+  TElevatedButtonTheme._();
 
   /* -- Light Theme -- */
   static final lightElevatedButtonTheme = ElevatedButtonThemeData(
@@ -17,8 +18,8 @@ class TElevatedButtonTheme {
       side: const BorderSide(color: AppColors.primary),
       padding: const EdgeInsets.all(10),
       textStyle: GoogleFonts.raleway().copyWith(
-          fontSize: 16, color: AppColors.white, fontWeight: FontWeight.w700),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          fontSize: 16.sp, color: AppColors.white, fontWeight: FontWeight.w700),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
     ),
   );
 }

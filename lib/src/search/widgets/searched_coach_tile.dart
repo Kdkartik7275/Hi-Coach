@@ -5,8 +5,8 @@ import 'package:hi_coach/core/common/widget/containers/circular_container.dart';
 import 'package:hi_coach/core/common/widget/effects/shimmer.dart';
 import 'package:hi_coach/core/common/widget/image/network_image.dart';
 import 'package:hi_coach/core/conifg/colors.dart';
+import 'package:hi_coach/models/coach.dart';
 import 'package:hi_coach/models/pricing.dart';
-import 'package:hi_coach/models/user.dart';
 import 'package:hi_coach/services/profile/profile_services.dart';
 import 'package:hi_coach/src/profile/views/student/cp_student_view.dart';
 
@@ -16,7 +16,7 @@ class SearchedCoachTile extends StatelessWidget {
     required this.coach,
   });
 
-  final UserModel coach;
+  final Coach coach;
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +111,7 @@ class PriceText extends StatelessWidget {
     required this.coach,
   });
 
-  final UserModel coach;
+  final Coach coach;
 
   @override
   Widget build(BuildContext context) {

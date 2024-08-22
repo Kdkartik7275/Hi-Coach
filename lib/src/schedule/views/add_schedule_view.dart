@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hi_coach/core/common/widget/dialog/student_delete_dialog.dart';
 import 'package:hi_coach/src/schedule/widgets/invite_student_dialog.dart';
@@ -24,7 +25,7 @@ class AddScheduleView extends GetView<ScheduleController> {
     return Scaffold(
       backgroundColor: AppColors.primary,
       appBar: AppBar(
-        leadingWidth: 100,
+        leadingWidth: 100.w,
         backgroundColor: AppColors.primary,
         leading: TextButton(
             onPressed: () {
@@ -86,7 +87,7 @@ class AddScheduleView extends GetView<ScheduleController> {
                   ),
 
                   // CLASS START TIMING
-                  const SizedBox(height: 15),
+                  SizedBox(height: 15.h),
                   TimingWidget(
                     date: controller.formattedStartDate,
                     label: 'Starts',
@@ -116,7 +117,7 @@ class AddScheduleView extends GetView<ScheduleController> {
 
                   // CLASS END TIMING
 
-                  const SizedBox(height: 15),
+                  SizedBox(height: 15.h),
                   TimingWidget(
                     label: 'Ends',
                     date: controller.formattedEndDate,
@@ -144,7 +145,7 @@ class AddScheduleView extends GetView<ScheduleController> {
                   ),
 
                   // CLASS REPEAT
-                  const SizedBox(height: 15),
+                  SizedBox(height: 15.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -167,7 +168,7 @@ class AddScheduleView extends GetView<ScheduleController> {
                   ),
 
                   // NUMBER OF STUDENTS
-                  const SizedBox(height: 15),
+                  SizedBox(height: 15.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -190,7 +191,7 @@ class AddScheduleView extends GetView<ScheduleController> {
                   ),
 
                   // AGE RANGE
-                  const SizedBox(height: 15),
+                  SizedBox(height: 15.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -236,11 +237,11 @@ class AddScheduleView extends GetView<ScheduleController> {
                   ),
 
                   // INVITE STUDENTS
-                  const SizedBox(height: 15),
+                  SizedBox(height: 15.h),
                   Text('Invite Students',
                       style: Theme.of(context).textTheme.titleSmall!.copyWith(
                           color: AppColors.textLighter, letterSpacing: 1)),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10.h),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
@@ -285,13 +286,13 @@ class AddScheduleView extends GetView<ScheduleController> {
                   ),
 
                   // DESCIPTION ABOUT CLASS
-                  const SizedBox(height: 15),
+                  SizedBox(height: 15.h),
 
                   TRoundedContainer(
-                    height: 150,
+                    height: 150.h,
                     width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12, vertical: 12),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
                     child: TextField(
                       maxLines: null,
                       maxLength: null,
@@ -317,12 +318,12 @@ class AddScheduleView extends GetView<ScheduleController> {
 
 class DropDownWidget extends StatelessWidget {
   const DropDownWidget({
-    Key? key,
+    super.key,
     required this.scheduleController,
     required this.list,
     required this.onChanged,
     required this.initialValue,
-  }) : super(key: key);
+  });
 
   final ScheduleController scheduleController;
   final List<DropdownMenuItem<String>> list;
@@ -332,15 +333,15 @@ class DropDownWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TRoundedContainer(
-      height: 36,
-      radius: 10,
+      height: 36.h,
+      radius: 10.w,
       //  width: 150,
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           value: initialValue,
           dropdownColor: AppColors.white,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(12.r),
           items: list,
           onChanged: onChanged,
         ),
@@ -374,9 +375,9 @@ class TimingWidget extends StatelessWidget {
           children: [
             // SELECT DATE
             TRoundedContainer(
-                height: 36,
-                width: 150,
-                radius: 10,
+                height: 36.h,
+                width: 150.w,
+                radius: 10.r,
                 padding: const EdgeInsets.only(left: 5),
                 margin: const EdgeInsets.only(right: 10),
                 child: Row(
@@ -388,7 +389,7 @@ class TimingWidget extends StatelessWidget {
                         style: Theme.of(context)
                             .textTheme
                             .titleMedium!
-                            .copyWith(fontSize: 15),
+                            .copyWith(fontSize: 15.sp),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -402,9 +403,9 @@ class TimingWidget extends StatelessWidget {
             // SELECT TIME
 
             TRoundedContainer(
-                height: 36,
-                width: 100,
-                radius: 10,
+                height: 36.h,
+                width: 100.w,
+                radius: 10.r,
                 padding: const EdgeInsets.only(left: 5),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -415,7 +416,7 @@ class TimingWidget extends StatelessWidget {
                         style: Theme.of(context)
                             .textTheme
                             .titleMedium!
-                            .copyWith(fontSize: 15),
+                            .copyWith(fontSize: 15.sp),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -445,8 +446,8 @@ class ScheduleField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TRoundedContainer(
-      height: 36,
-      radius: 10,
+      height: 36.h,
+      radius: 10.r,
       margin: const EdgeInsets.only(bottom: 20),
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: TextField(
@@ -454,8 +455,7 @@ class ScheduleField extends StatelessWidget {
         textAlignVertical: TextAlignVertical.center,
         decoration: InputDecoration(
             hintText: hintText,
-            hintStyle:
-                const TextStyle(fontSize: 16, color: AppColors.textLighter),
+            hintStyle: TextStyle(fontSize: 16.sp, color: AppColors.textLighter),
             border: InputBorder.none,
             enabledBorder: InputBorder.none,
             focusedBorder: InputBorder.none,
@@ -475,8 +475,8 @@ class SearchStudentField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TRoundedContainer(
-      height: 36,
-      radius: 10,
+      height: 36.h,
+      radius: 10.r,
       margin: const EdgeInsets.only(bottom: 20),
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: TextField(

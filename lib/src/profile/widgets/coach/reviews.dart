@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hi_coach/core/common/widget/buttons/profile_button.dart';
 import 'package:hi_coach/core/common/widget/indicators/rating_indicator.dart';
 import 'package:hi_coach/core/common/widget/ratings/average_user_rating.dart';
@@ -13,23 +14,23 @@ class CoachReviewWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Row(
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                LinearRatingIndicator(rating: 5, width: 200),
-                LinearRatingIndicator(rating: 4, width: 150),
-                LinearRatingIndicator(rating: 3, width: 100),
-                LinearRatingIndicator(rating: 2, width: 70),
-                LinearRatingIndicator(rating: 1, width: 20),
+                LinearRatingIndicator(rating: 5, width: 200.w),
+                LinearRatingIndicator(rating: 4, width: 150.w),
+                LinearRatingIndicator(rating: 3, width: 100.w),
+                LinearRatingIndicator(rating: 2, width: 70.w),
+                LinearRatingIndicator(rating: 1, width: 20.w),
               ],
             ),
-            AverageUsersRating(),
+            const AverageUsersRating(),
           ],
         ),
-        const SizedBox(height: 20),
+        SizedBox(height: 20.h),
         ProfileButton(
             label: 'Wrtie Review',
             size: const Size(280, 45),
@@ -42,7 +43,7 @@ class CoachReviewWidget extends StatelessWidget {
 
         const UserReview(),
         const UserReview(),
-        const SizedBox(height: 50),
+        SizedBox(height: 50.h),
       ],
     );
   }

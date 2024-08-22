@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:hi_coach/core/conifg/app_pages.dart';
+import 'package:hi_coach/models/coach.dart';
 import 'package:hi_coach/models/package.dart';
 import 'package:hi_coach/models/pricing.dart';
+import 'package:hi_coach/models/student.dart';
 import 'package:hi_coach/services/authentication/login_services.dart';
 import 'package:intl/intl.dart';
 
@@ -11,7 +13,6 @@ import 'package:get/get.dart';
 
 import 'package:hi_coach/core/common/network/connection_checker.dart';
 import 'package:hi_coach/core/utils/helpers/functions.dart';
-import 'package:hi_coach/models/user.dart';
 import 'package:hi_coach/services/profile/profile_services.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
@@ -26,10 +27,10 @@ class ProfileController extends GetxController {
   var profilePic = Rx<File?>(null);
   var certificaiton = Rx<File?>(null);
   var coachInfoSelectedIndex = 0.obs;
-  final _user = Rx<UserModel?>(null);
+  final _user = Rx<dynamic>(null);
 
   // USER GETTER
-  UserModel? get user => _user.value;
+  dynamic get user => _user.value;
 
   // SERVVICES
   final connectionChecker = ConnectionCheckerImpl(InternetConnection());
@@ -37,12 +38,22 @@ class ProfileController extends GetxController {
   final loginServices = LoginServices();
   final _auth = FirebaseAuth.instance;
 
-  Future<UserModel?> fetchUserById(String id) async {
+  Future<Student?> fetchStudentByID(String id) async {
     try {
-      UserModel? user = await services.fetchUserById(id);
-      return user!;
+      Student? student = await services.fetchStudentByID(id);
+      return student;
     } catch (e) {
-      Get.snackbar("Unknown Error", e.toString());
+      //
+    }
+    return null;
+  }
+
+  Future<Coach?> fetchCoachByID(String id) async {
+    try {
+      Coach? coach = await services.fetchCoachByID(id);
+      return coach;
+    } catch (e) {
+      //
     }
     return null;
   }
@@ -85,7 +96,7 @@ class ProfileController extends GetxController {
     }
   }
 
-  Future<void> saveStudentInfo(UserModel newStudent) async {
+  Future<void> saveStudentInfo(Student newStudent) async {
     try {
       await services.saveStudentInfo(newStudent);
     } catch (e) {
@@ -93,9 +104,9 @@ class ProfileController extends GetxController {
     }
   }
 
-  Future<void> saveCoachInfo(UserModel newStudent) async {
+  Future<void> saveCoachInfo(Coach newCoach) async {
     try {
-      await services.saveCoachInfo(newStudent);
+      await services.saveCoachInfo(newCoach);
     } catch (e) {
       throw e.toString();
     }
@@ -203,12 +214,24 @@ class ProfileController extends GetxController {
   fetchCurrentUser() async {
     try {
       profileLoading.value = true;
-      UserModel? myUser = await services.fetchUserById(_auth.currentUser!.uid);
+      final student = await services.fetchStudentByID(_auth.currentUser!.uid);
 
-      _user.value = myUser;
+      if (student != null) {
+        profileLoading.value = false;
+        _user.value = student;
+        return;
+      }
+
+      final coach = await services.fetchCoachByID(_auth.currentUser!.uid);
+      if (coach != null) {
+        profileLoading.value = false;
+        _user.value = coach;
+        return;
+      }
 
       profileLoading.value = false;
     } catch (e) {
+      profileLoading.value = false;
       Get.snackbar("Unknown Error", e.toString());
     }
   }

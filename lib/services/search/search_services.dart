@@ -1,50 +1,57 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/get.dart';
-import 'package:hi_coach/core/common/controllers/location_controller.dart';
-import 'package:hi_coach/models/user.dart';
+import 'package:hi_coach/core/utils/helpers/functions.dart';
+import 'package:hi_coach/models/coach.dart';
+import 'package:hi_coach/models/coaching_area.dart';
 
 class SearchServices {
   final _firestore = FirebaseFirestore.instance;
 
-  final locationController = Get.find<LocationController>();
-
-  Future<List<UserModel>> searchCoachesBySprt(
+  Future<Map<String, dynamic>> searchCoachesBySprt(
       String sport, double userLat, double userLon) async {
-    final List<UserModel> allCoaches = await _getAllCoachesBySport(sport);
-    print('ALL COACHES --------------------------------');
-    print(allCoaches);
+    final List<Coach> allCoaches = await _getAllCoachesBySport(sport);
 
-    final List<UserModel> nearbyCoaches = [];
+    final List<Coach> nearbyCoaches = [];
+    final List<CoachingArea> areas = [];
 
     for (var coach in allCoaches) {
-      if (coach.coachingLocation != null) {
-        double coachLat = double.parse(coach.coachingLocation!['latitude']);
-        double coachLon = double.parse(coach.coachingLocation!['longitude']);
+      if (coach.coachingAreas != null && coach.coachingAreas!.isNotEmpty) {
+        bool isWithinRange = false;
 
-        // Calculate distance
-        double distance = locationController.calculateDistance(
-            userLat, userLon, coachLat, coachLon);
+        for (var area in coach.coachingAreas!) {
+          double areaLat = area.latitude;
+          double areaLon = area.longitude;
 
-        // Check if the distance is within 50 km
-        if (distance <= 50) {
+          // Calculate distance
+          double distance =
+              calculateDistance(userLat, userLon, areaLat, areaLon);
+
+          // Check if the distance is within 50 km
+          if (distance <= 50) {
+            isWithinRange = true;
+            areas.add(area);
+            break; // No need to check other areas, as we found one in range
+          }
+        }
+
+        if (isWithinRange) {
           nearbyCoaches.add(coach);
         }
       }
     }
-    print('NEARBY COACHES --------------------------------');
-    print(nearbyCoaches);
+    // print('NEARBY COACHES --------------------------------');
+    // print(nearbyCoaches);
 
-    return nearbyCoaches;
+    return {'coaches': nearbyCoaches, 'areas': areas};
   }
 
-// Mock function to fetch coaches
-  Future<List<UserModel>> _getAllCoachesBySport(String sport) async {
+  // Mock function to fetch coaches
+  Future<List<Coach>> _getAllCoachesBySport(String sport) async {
     final coachesSnapshot = await _firestore
         .collection('Coaches')
         .where('sports', arrayContainsAny: [sport]).get();
 
     return coachesSnapshot.docs
-        .map((doc) => UserModel.fromMap(doc.data()))
+        .map((doc) => Coach.fromMap(doc.data()))
         .toList();
   }
 }

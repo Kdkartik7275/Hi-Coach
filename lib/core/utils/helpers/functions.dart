@@ -1,14 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:geolocator/geolocator.dart';
 
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'dart:ui';
 
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 void httpErrorHandling({
   required VoidCallback onSuccess,
@@ -91,9 +92,28 @@ Future<Position?> getCurrentLocation() async {
     return positon;
   } catch (e) {
     Get.snackbar('Location Error', e.toString(),
-        backgroundColor: Colors.white, duration: Duration(seconds: 5));
+        backgroundColor: Colors.white, duration: const Duration(seconds: 5));
   }
   return null;
+}
+
+double _degreesToRadians(double degrees) {
+  return degrees * (pi / 180);
+}
+
+double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+  const double earthRadius = 6371; // Earth radius in kilometers
+  final double dLat = _degreesToRadians(lat2 - lat1);
+  final double dLon = _degreesToRadians(lon2 - lon1);
+
+  final double a = sin(dLat / 2) * sin(dLat / 2) +
+      cos(_degreesToRadians(lat1)) *
+          cos(_degreesToRadians(lat2)) *
+          sin(dLon / 2) *
+          sin(dLon / 2);
+  final double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+
+  return earthRadius * c;
 }
 
 class FileUtils {
@@ -106,4 +126,11 @@ class FileUtils {
   static String getFileSize(File file) {
     return (file.lengthSync() / (1024 * 1024)).toStringAsFixed(1);
   }
+}
+
+String formatTimeOfDay(TimeOfDay time) {
+  final now = DateTime.now();
+  final dt = DateTime(now.year, now.month, now.day, time.hour, time.minute);
+  final format = DateFormat.jm(); // 'jm' will format to '1:38 AM' or '1:38 PM'
+  return format.format(dt);
 }

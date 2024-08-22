@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_picker/country_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:hi_coach/core/common/network/connection_checker.dart';
-import 'package:hi_coach/models/user.dart';
+import 'package:hi_coach/models/coach.dart';
+import 'package:hi_coach/models/student.dart';
 import 'package:hi_coach/services/authentication/regsiter_services.dart';
 import 'package:hi_coach/src/auth/view/signup/coach_initialization.dart';
 import 'package:hi_coach/src/auth/view/signup/student_initialization.dart';
@@ -70,29 +72,20 @@ class SignUpController extends GetxController {
           password: password.value.text,
         );
         if (credential.user != null) {
-          UserModel newUser = UserModel(
-            id: credential.user!.uid,
-            email: email.value.text,
-            fullName: fullName.value.text,
-            phone: "+${selectedCountry.value!.phoneCode} ${phone.value.text}",
-            userType: userType,
-            dob: "${date.value} ${month.value} ${year.value}",
-            gender: 'Male',
-            profileURL: [],
-            bio: '',
-            sports: [],
-            coachingExperience: '',
-            playingExperience: '',
-            coachingAreas: [],
-            coachingLocation: {},
-            certifications: [],
-            createdAt: Timestamp.now(),
-            lastSeen: Timestamp.now(),
-          );
           if (userType == 'Student') {
-            profileController.saveStudentInfo(newUser);
+            _saveStudent(
+                credential,
+                email.value.text,
+                fullName.value.text,
+                "+${selectedCountry.value!.phoneCode} ${phone.value.text}",
+                "${date.value} ${month.value} ${year.value}");
           } else {
-            profileController.saveCoachInfo(newUser);
+            _saveCoach(
+                credential,
+                email.value.text,
+                fullName.value.text,
+                "+${selectedCountry.value!.phoneCode} ${phone.value.text}",
+                "${date.value} ${month.value} ${year.value}");
           }
         }
         registering.value = false;
@@ -107,5 +100,53 @@ class SignUpController extends GetxController {
       registering.value = false;
       Get.snackbar('Error', e.toString());
     }
+  }
+
+  _saveStudent(
+    UserCredential credential,
+    String email,
+    String fullName,
+    String phone,
+    String dob,
+  ) async {
+    Student newStudent = Student(
+        id: credential.user!.uid,
+        email: credential.user!.email!,
+        fullName: fullName,
+        phone: phone,
+        bio: '',
+        sports: [],
+        createdAt: Timestamp.now(),
+        dob: dob,
+        profileURL: [],
+        userType: 'Student',
+        gender: 'Male');
+    await profileController.saveStudentInfo(newStudent);
+  }
+
+  _saveCoach(
+    UserCredential credential,
+    String email,
+    String fullName,
+    String phone,
+    String dob,
+  ) async {
+    Coach newCoach = Coach(
+        id: credential.user!.uid,
+        email: credential.user!.email!,
+        fullName: fullName,
+        phone: phone,
+        bio: '',
+        sports: [],
+        createdAt: Timestamp.now(),
+        dob: dob,
+        profileURL: [],
+        userType: 'Coach',
+        certifications: [],
+        coachingAreas: [],
+        coachingExperience: '',
+        playingExperience: '',
+        gender: 'Male');
+    await profileController.saveCoachInfo(newCoach);
   }
 }

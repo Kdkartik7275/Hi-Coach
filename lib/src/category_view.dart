@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_coach/core/conifg/colors.dart';
@@ -13,9 +14,9 @@ import 'package:hi_coach/src/search/views/nearby_coaches.dart';
 class CategoryView extends StatefulWidget {
   bool isSearchScreen;
   CategoryView({
-    Key? key,
+    super.key,
     this.isSearchScreen = false,
-  }) : super(key: key);
+  });
 
   @override
   State<CategoryView> createState() => _CategoryViewState();
@@ -44,7 +45,7 @@ class _CategoryViewState extends State<CategoryView> {
                   'Find the right coach for you',
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20.h),
                 GridView(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -73,10 +74,10 @@ class _CategoryViewState extends State<CategoryView> {
                               }
                             },
                             child: Container(
-                              height: 110,
-                              width: 130,
+                              height: 110.h,
+                              width: 130.w,
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
+                                  borderRadius: BorderRadius.circular(12.r),
                                   color: AppColors.primary),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,

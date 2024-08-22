@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hi_coach/core/conifg/colors.dart';
 
 class CoachInfoTab extends StatelessWidget {
   const CoachInfoTab({
-    Key? key,
+    super.key,
     this.controller,
     required this.title,
     required this.hintText,
-  }) : super(key: key);
+  });
 
   final TextEditingController? controller;
   final String title;
@@ -22,13 +23,14 @@ class CoachInfoTab extends StatelessWidget {
           title,
           style: Theme.of(context).textTheme.titleMedium!,
         ),
-        const SizedBox(height: 5),
+        SizedBox(height: 5.h),
         Container(
-          height: 150,
+          height: 150.h,
           width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12), color: AppColors.filled),
+              borderRadius: BorderRadius.circular(12.r),
+              color: AppColors.filled),
           child: TextField(
             maxLines: null,
             maxLength: null,
@@ -42,7 +44,7 @@ class CoachInfoTab extends StatelessWidget {
                 border: InputBorder.none),
           ),
         ),
-        const SizedBox(height: 20),
+        SizedBox(height: 20.h),
       ],
     );
   }

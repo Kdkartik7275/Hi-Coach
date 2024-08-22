@@ -1,8 +1,9 @@
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hi_coach/core/common/controllers/location_controller.dart';
+import 'package:hi_coach/models/coach.dart';
+import 'package:hi_coach/models/coaching_area.dart';
 import 'package:hi_coach/models/placemodel.dart';
-import 'package:hi_coach/models/user.dart';
 import 'package:hi_coach/services/search/search_services.dart';
 import 'package:uuid/uuid.dart';
 
@@ -17,7 +18,8 @@ class SearchCoachesController extends GetxController {
   // SERVICES AND LISTS
   final services = SearchServices();
   final locationController = Get.find<LocationController>();
-  List<UserModel> coaches = [];
+  List<Coach> coaches = [];
+  List<CoachingArea> areas = [];
 
   // SEARCH COACHES
 
@@ -28,9 +30,10 @@ class SearchCoachesController extends GetxController {
       final coachesData =
           await services.searchCoachesBySprt(sport, userLat, userLon);
 
-      coaches = coachesData;
+      coaches = coachesData['coaches'];
+      areas = coachesData['areas'];
 
-      _addMarkers(coachesData);
+      _addMarkers(coaches, areas);
 
       searching.value = false;
     } catch (e) {
@@ -69,12 +72,16 @@ class SearchCoachesController extends GetxController {
         searching.value = true;
         locationController.currentPosition.value =
             LatLng(location.latitude, location.longitude);
+        locationController.googleMapController.animateCamera(
+          CameraUpdate.newLatLng(locationController.currentPosition.value!),
+        );
         final coachesData = await services.searchCoachesBySprt(
             selectedSport.value, location.latitude, location.longitude);
 
-        coaches = coachesData;
+        coaches = coachesData['coaches'];
+        areas = coachesData['areas'];
 
-        _addMarkers(coachesData);
+        _addMarkers(coaches, areas);
       }
       searching.value = false;
       return location;
@@ -94,9 +101,10 @@ class SearchCoachesController extends GetxController {
       final coachesData = await services.searchCoachesBySprt(
           selectedSport.value, location.latitude, location.longitude);
 
-      coaches = coachesData;
+      coaches = coachesData['coaches'];
+      areas = coachesData['areas'];
 
-      _addMarkers(coachesData);
+      _addMarkers(coaches, areas);
 
       searching.value = false;
     } catch (e) {
@@ -105,41 +113,15 @@ class SearchCoachesController extends GetxController {
     }
   }
 
-  // void sortCoaches(int sortBy) {
-  //   switch (sortBy) {
-  //     case 0:
-  //     //  coaches.sort((a, b) => a.rating.compareTo(b.rating));
-  //       break;
-  //     case 1:
-  //       coaches.sort((a, b) => a.distance.compareTo(b.distance));
-  //       break;
-  //     case 2:
-  //       coaches.sort((a, b) => b.distance.compareTo(a.distance));
-  //       break;
-  //     case 3:
-  //       coaches.sort((a, b) => b.price.compareTo(a.price));
-  //       break;
-  //     case 4:
-  //       coaches.sort((a, b) => a.price.compareTo(b.price));
-  //       break;
-  //     default:
-  //       // Default sorting method, e.g., by rating
-  //       coaches.sort((a, b) => a.rating.compareTo(b.rating));
-  //   }
-  //   update(); // Notify GetX to update the UI
-  // }
-
   clearSugestions() {
     suggestions.value = [];
     fetchingSuggestions.value = false;
   }
 
-  _addMarkers(List<UserModel> coachesData) {
-    for (var coach in coachesData) {
+  _addMarkers(List<Coach> coachesData, List<CoachingArea> areas) {
+    for (int i = 0; i <= coachesData.length; i++) {
       locationController.addCoachMarker(
-          LatLng(double.parse(coach.coachingLocation!['latitude']),
-              double.parse(coach.coachingLocation!['longitude'])),
-          coach.id);
+          LatLng(areas[i].latitude, areas[i].longitude), coachesData[i].id);
     }
   }
 

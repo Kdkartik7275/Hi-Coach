@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_coach/core/common/widget/containers/rounded_container.dart';
@@ -32,8 +33,8 @@ class Packages extends StatelessWidget {
                 const SizedBox(width: 6),
                 TRoundedContainer(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
-                  height: 35,
-                  width: 120,
+                  height: 35.h,
+                  width: 120.w,
                   alignment: Alignment.centerLeft,
                   backgroundColor: AppColors.filled,
                   child: Text(package.packageFor,
@@ -42,47 +43,44 @@ class Packages extends StatelessWidget {
                           .titleSmall!
                           .copyWith(fontSize: 16)),
                 ),
-                const SizedBox(width: 6),
+                SizedBox(width: 6.w),
                 Text('Hrs',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .copyWith(fontSize: 16, fontWeight: FontWeight.w700)),
-                const SizedBox(width: 6),
+                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                        fontSize: 16.sp, fontWeight: FontWeight.w700)),
+                SizedBox(width: 6.w),
                 TRoundedContainer(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  height: 35,
+                  padding: EdgeInsets.symmetric(horizontal: 10.w),
+                  height: 35.h,
                   alignment: Alignment.center,
                   backgroundColor: AppColors.filled,
                   child: Text(package.hours.toString(),
                       style: Theme.of(context)
                           .textTheme
                           .titleSmall!
-                          .copyWith(fontSize: 16)),
+                          .copyWith(fontSize: 16.sp)),
                 ),
-                const SizedBox(width: 6),
+                SizedBox(width: 6.w),
                 Text('Discount',
                     style: Theme.of(context).textTheme.titleMedium),
-                const SizedBox(width: 6),
+                SizedBox(width: 6.w),
                 TRoundedContainer(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  height: 35,
-                  // width: 50,
-                  radius: 10,
+                  padding: EdgeInsets.symmetric(horizontal: 10.w),
+                  height: 35.h,
+                  radius: 10.r,
                   alignment: Alignment.centerLeft,
                   backgroundColor: AppColors.filled,
                   child: Text(package.discount.toString(),
                       style: Theme.of(context)
                           .textTheme
                           .titleSmall!
-                          .copyWith(fontSize: 16)),
+                          .copyWith(fontSize: 16.sp)),
                 ),
               ],
             ),
           );
         },
         separatorBuilder: (BuildContext context, int index) {
-          return const SizedBox(height: 15);
+          return SizedBox(height: 15.h);
         },
       ),
     );

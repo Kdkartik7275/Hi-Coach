@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hi_coach/core/common/widget/heading/heading.dart';
 import 'package:hi_coach/core/common/widget/indicators/progress_indicators.dart';
@@ -119,25 +120,25 @@ class _CoachProfileState extends State<CoachProfile> {
           progressIndicator: circularProgress(context),
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 50),
+                  SizedBox(height: 50.h),
                   TitleSubtitle(
                       padding: EdgeInsets.zero, title: 'Your Profile'),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10.h),
                   Text(
                     'Bio',
                     style: Theme.of(context).textTheme.titleSmall!,
                   ),
                   Container(
-                    height: 150,
+                    height: 150.h,
                     width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12, vertical: 12),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(12.r),
                         color: AppColors.filled),
                     child: TextField(
                       maxLines: null,
@@ -153,7 +154,7 @@ class _CoachProfileState extends State<CoachProfile> {
                           border: InputBorder.none),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10.h),
                   Text(
                     'Playing Experience',
                     style: Theme.of(context).textTheme.titleSmall!,
@@ -164,14 +165,14 @@ class _CoachProfileState extends State<CoachProfile> {
                       final controller = entry.value;
                       final focusNode = _playingFocusNodes[index];
                       return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        padding: EdgeInsets.symmetric(horizontal: 8.0.w),
                         child: Row(
                           children: [
                             Text(
                               "${index + 1}",
                               style: Theme.of(context).textTheme.titleSmall!,
                             ),
-                            const SizedBox(width: 15),
+                            SizedBox(width: 15.w),
                             Expanded(
                               child: TextField(
                                 controller: controller,
@@ -210,7 +211,7 @@ class _CoachProfileState extends State<CoachProfile> {
                       );
                     },
                   ),
-                  const SizedBox(height: 30),
+                  SizedBox(height: 30.h),
                   Text(
                     'Coaching Experience',
                     style: Theme.of(context).textTheme.titleSmall!,
@@ -228,7 +229,7 @@ class _CoachProfileState extends State<CoachProfile> {
                               "${index + 1}",
                               style: Theme.of(context).textTheme.titleSmall!,
                             ),
-                            const SizedBox(width: 15),
+                            SizedBox(width: 15.w),
                             Expanded(
                               child: TextField(
                                 controller: controller,
@@ -268,17 +269,17 @@ class _CoachProfileState extends State<CoachProfile> {
                       );
                     },
                   ),
-                  const SizedBox(height: 40),
+                  SizedBox(height: 40.h),
                   Text(
                     'Certifications',
                     style: Theme.of(context).textTheme.titleSmall!,
                   ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10.h),
                   Stack(
                     children: [
                       Container(
-                        height: 85,
-                        width: 70,
+                        height: 85.h,
+                        width: 70.w,
                         decoration: BoxDecoration(
                           border: Border.all(color: AppColors.border),
                         ),
@@ -311,7 +312,7 @@ class _CoachProfileState extends State<CoachProfile> {
                                     color: AppColors.white)))
                     ],
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20.h),
                   Center(
                     child: AuthButton(
                       label: 'Save',

@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_coach/core/common/widget/dialog/family_dialog.dart';
@@ -15,9 +16,9 @@ import 'package:loading_overlay/loading_overlay.dart';
 class StudentInitialization extends GetView<ProfileController> {
   final String fullName;
   const StudentInitialization({
-    Key? key,
+    super.key,
     required this.fullName,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,17 +33,17 @@ class StudentInitialization extends GetView<ProfileController> {
           progressIndicator: circularProgress(context),
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
+              padding: EdgeInsets.symmetric(horizontal: 12.w),
               child: Center(
                 child: Column(
                   children: [
                     const PickImage(),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10.h),
                     Text(
                       fullName,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    const SizedBox(height: 60),
+                    SizedBox(height: 60.h),
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
@@ -62,23 +63,23 @@ class StudentInitialization extends GetView<ProfileController> {
                             });
                       },
                       child: Container(
-                        height: 150,
+                        height: 150.h,
                         width: double.infinity,
-                        margin: const EdgeInsets.only(top: 10),
+                        margin: EdgeInsets.only(top: 10.h),
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(12.r),
                             color: AppColors.filled),
-                        child: const Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text('Add Family'),
-                            SizedBox(width: 5),
-                            Icon(Icons.add_circle_outline)
+                            const Text('Add Family'),
+                            SizedBox(width: 5.w),
+                            const Icon(Icons.add_circle_outline)
                           ],
                         ),
                       ),
                     ),
-                    const SizedBox(height: 30),
+                    SizedBox(height: 30.h),
                     AuthButton(
                       label: 'Done',
                       onPressed: () {

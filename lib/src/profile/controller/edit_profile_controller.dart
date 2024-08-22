@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hi_coach/core/common/controllers/location_controller.dart';
+import 'package:hi_coach/core/common/services/location_services.dart';
 import 'package:hi_coach/core/utils/helpers/functions.dart';
+import 'package:hi_coach/models/coaching_area.dart';
 import 'package:hi_coach/models/package.dart';
 import 'package:hi_coach/models/pricing.dart';
 import 'package:hi_coach/services/profile/profile_services.dart';
@@ -37,15 +38,16 @@ class EditProfileController extends GetxController {
   var packages = Rx<List<Package>>([]);
   var profiles = Rx<List>([]);
   var certifications = Rx<List>([]);
-  var coachingAreas = Rx<List>([]);
+  var coachingAreas = Rx<List<CoachingArea>>([]);
   var suggestions = Rx<List>([]);
 
   // PROFILE CONTROLLER
 
   final profileController = Get.find<ProfileController>();
-  final locationController = Get.find<LocationController>();
 
   final services = ProfileServices();
+
+  final locationServices = LocationServices();
 
   @override
   void onInit() {
@@ -62,6 +64,7 @@ class EditProfileController extends GetxController {
     playExperience.text = user.playingExperience!;
     coachingExperience.text = user.coachingExperience!;
     certifications.value = user.certifications!;
+
     coachingAreas.value = user.coachingAreas!;
     getCoachPrices();
   }
@@ -145,7 +148,8 @@ class EditProfileController extends GetxController {
         'coachingExperience': coachingExperience.text,
         'certifications': certifications.value,
         'profileURL': profiles.value,
-        'coachingAreas': coachingAreas.value
+        'coachingAreas':
+            coachingAreas.value.map((area) => area.toMap()).toList()
       }, () {
         Get.back();
         _resetAllFields();
@@ -201,7 +205,7 @@ class EditProfileController extends GetxController {
 
   Future<void> searchAreas(String input) async {
     try {
-      final areas = await locationController.getAreas(input);
+      final areas = await locationServices.getAreas(input);
       if (areas.isNotEmpty) {
         suggestions.value = areas;
       }
@@ -210,8 +214,12 @@ class EditProfileController extends GetxController {
     }
   }
 
-  addAreas(String text) {
-    coachingAreas.value.add(text);
+  addAreas(String text) async {
+    final latlng = await locationServices.getLatLngFromAddress(text);
+
+    coachingAreas.value.add(CoachingArea(
+        label: text, latitude: latlng!.latitude, longitude: latlng.longitude));
+    print(coachingAreas.value);
     suggestions.value = [];
   }
 }

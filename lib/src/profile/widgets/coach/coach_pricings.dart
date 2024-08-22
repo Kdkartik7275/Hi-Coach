@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:hi_coach/core/common/widget/containers/price_container.dart';
 import 'package:hi_coach/core/common/widget/effects/shimmer.dart';
@@ -31,8 +32,8 @@ class CoachPricingWidget extends StatelessWidget {
           future: controller.getCoachPricings(coachID),
           builder: (context, AsyncSnapshot<List<Pricing>?> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const TShimmerEffect(
-                  height: 100, width: double.infinity, radius: 15);
+              return TShimmerEffect(
+                  height: 100.h, width: double.infinity, radius: 15.r);
             }
             if (snapshot.hasData) {
               final prices = snapshot.data!;
@@ -53,7 +54,7 @@ class CoachPricingWidget extends StatelessWidget {
           },
         ),
         // ----------- PACKAGES ----------------
-        const SizedBox(height: 20),
+        SizedBox(height: 20.h),
         TitleSubtitle(padding: EdgeInsets.zero, title: 'Packages'),
 
         // FETCH ALL THE PACKAGES
@@ -62,8 +63,8 @@ class CoachPricingWidget extends StatelessWidget {
           future: controller.getCoachPackages(coachID),
           builder: (context, AsyncSnapshot<List<Package>?> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const TShimmerEffect(
-                  height: 80, width: double.infinity, radius: 20);
+              return TShimmerEffect(
+                  height: 80.h, width: double.infinity, radius: 20.r);
             }
             if (snapshot.hasData) {
               if (snapshot.data == []) {
@@ -91,7 +92,7 @@ class CoachPricingWidget extends StatelessWidget {
           },
         ),
 
-        const SizedBox(height: 50)
+        SizedBox(height: 50.h)
       ],
     );
   }

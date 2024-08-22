@@ -6,11 +6,11 @@ class AuthButton extends StatelessWidget {
   Function()? onPressed;
   final Size size;
   AuthButton({
-    Key? key,
+    super.key,
     required this.label,
     this.onPressed,
     this.size = const Size(271, 61),
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

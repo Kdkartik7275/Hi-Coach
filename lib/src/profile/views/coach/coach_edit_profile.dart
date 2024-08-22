@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_coach/core/common/widget/containers/rounded_container.dart';
@@ -52,7 +53,7 @@ class CoachEditProfileView extends GetView<EditProfileController> {
                 children: [
                   // -------------- COACH PROFILE IMAGES ------------
                   SizedBox(
-                      height: 150,
+                      height: 150.h,
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
@@ -61,19 +62,18 @@ class CoachEditProfileView extends GetView<EditProfileController> {
                               children: List.generate(
                                   controller.profiles.value.length,
                                   (index) => Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 10),
+                                        padding: EdgeInsets.only(right: 10.w),
                                         child: TCachedNetworkImage(
                                             radius: 0,
                                             profileURL: controller
                                                 .profiles.value[index],
-                                            height: 150,
-                                            width: 120),
+                                            height: 150.h,
+                                            width: 120.w),
                                       )),
                             ),
                             TRoundedContainer(
-                              height: 150,
-                              width: 120,
+                              height: 150.h,
+                              width: 120.w,
                               backgroundColor: AppColors.filled,
                               child: Center(
                                 child: IconButton(
@@ -90,33 +90,33 @@ class CoachEditProfileView extends GetView<EditProfileController> {
                         ),
                       )),
 
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10.h),
                   const Divider(),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20.h),
 
                   // --------- COACH DETAILS --------------
                   KeyValue(
                       hintText: 'Full Name',
                       title: 'Name',
                       controller: controller.name),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10.h),
                   KeyValue(
                       hintText: 'Phone No.',
                       title: 'Contact',
                       controller: controller.phone),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10.h),
                   KeyValue(
                     hintText: 'Postal Code (For nearby students)',
                     title: 'Location',
                     controller: controller.location,
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20.h),
 
                   // COACHING AREAS
 
                   ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      maxWidth: 500.0,
+                    constraints: BoxConstraints(
+                      maxWidth: 500.0.w,
                     ),
                     child: Wrap(
                       spacing: 10.0,
@@ -125,19 +125,19 @@ class CoachEditProfileView extends GetView<EditProfileController> {
                       children: List.generate(
                           controller.coachingAreas.value.length, (index) {
                         return TRoundedContainer(
-                          height: 35,
-                          width: 150,
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          height: 35.h,
+                          width: 150.w,
+                          padding: EdgeInsets.symmetric(horizontal: 16.w),
                           backgroundColor: AppColors.primary,
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            controller.coachingAreas.value[index],
+                            controller.coachingAreas.value[index].label,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: Theme.of(context)
                                 .textTheme
                                 .titleMedium!
-                                .copyWith(fontSize: 16),
+                                .copyWith(fontSize: 16.sp),
                           ),
                         );
                       }),
@@ -146,7 +146,7 @@ class CoachEditProfileView extends GetView<EditProfileController> {
 
                   SizedBox(
                       height:
-                          controller.coachingAreas.value.isNotEmpty ? 20 : 0),
+                          controller.coachingAreas.value.isNotEmpty ? 20.h : 0),
 
                   // ----------- LOCATION SEARCH FIELD --------------
 
@@ -164,10 +164,10 @@ class CoachEditProfileView extends GetView<EditProfileController> {
                                 .addAreas(controller.suggestions.value[index]);
                           },
                           child: TRoundedContainer(
-                            height: 30,
+                            height: 30.h,
                             // backgroundColor: AppColors.filled,
-                            padding: const EdgeInsets.symmetric(horizontal: 12),
-                            margin: const EdgeInsets.only(top: 10),
+                            padding: EdgeInsets.symmetric(horizontal: 12.w),
+                            margin: EdgeInsets.only(top: 10.h),
                             radius: 0,
                             child: Text(controller.suggestions.value[index],
                                 style: Theme.of(context).textTheme.titleMedium),
@@ -175,7 +175,7 @@ class CoachEditProfileView extends GetView<EditProfileController> {
                         );
                       },
                     ),
-                  const SizedBox(height: 40),
+                  SizedBox(height: 40.h),
                   CoachInfoTab(
                       hintText:
                           'Tell us about yourself and your teaching style...',
@@ -195,7 +195,7 @@ class CoachEditProfileView extends GetView<EditProfileController> {
 
                   // --------------- ADD CERTIFICATIONS BUTTON -----------------
                   SizedBox(
-                      height: 150,
+                      height: 150.h,
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
@@ -210,8 +210,8 @@ class CoachEditProfileView extends GetView<EditProfileController> {
                                             profileURL: controller
                                                 .certifications.value[index],
                                             radius: 0,
-                                            height: 150,
-                                            width: 120),
+                                            height: 150.h,
+                                            width: 120.w),
                                       )),
                             ),
                             TRoundedContainer(
@@ -235,14 +235,14 @@ class CoachEditProfileView extends GetView<EditProfileController> {
 
                   // --------------- PRICING ------------------
 
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20.h),
                   Text('Pricing',
                       style: Theme.of(context).textTheme.titleMedium!),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10.h),
 
                   // SHOW ALL PRICINGS
                   Pricings(controller: controller),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10.h),
 
                   // BUTTON TO ADD PRICING
                   ElevatedButton(
@@ -257,15 +257,15 @@ class CoachEditProfileView extends GetView<EditProfileController> {
 
                   // ---------------- PACKAGES --------------------
 
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20.h),
                   if (controller.initialPrices.value.isNotEmpty) ...[
                     Text('Packages',
                         style: Theme.of(context).textTheme.titleMedium!),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10.h),
 
                     // SHOW ALL PACKAGES
                     Packages(controller: controller),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10.h),
 
                     ElevatedButton(
                       onPressed: () {

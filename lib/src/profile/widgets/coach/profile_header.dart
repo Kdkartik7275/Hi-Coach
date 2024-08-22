@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_coach/core/common/widget/containers/circular_container.dart';
@@ -8,7 +9,7 @@ import 'package:hi_coach/core/common/widget/containers/rounded_container.dart';
 import 'package:hi_coach/core/common/widget/image/network_image.dart';
 import 'package:hi_coach/core/conifg/app_images.dart';
 import 'package:hi_coach/core/conifg/colors.dart';
-import 'package:hi_coach/models/user.dart';
+import 'package:hi_coach/models/coach.dart';
 import 'package:hi_coach/src/favourite/controller/favourite_controller.dart';
 import 'package:hi_coach/src/profile/controller/profile_controller.dart';
 
@@ -20,7 +21,7 @@ class CoachProfileHeader extends StatefulWidget {
     this.backRequired = false,
   });
 
-  final UserModel coach;
+  final Coach coach;
   final ProfileController controller;
   final bool backRequired;
 
@@ -90,7 +91,7 @@ class _CoachProfileHeaderState extends State<CoachProfileHeader> {
                       color: AppColors.white, fontWeight: FontWeight.w900),
                 ),
                 ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 300.0),
+                  constraints: BoxConstraints(maxWidth: 300.w),
                   child: Wrap(
                     spacing: 10.0,
                     runSpacing: 5,
@@ -99,17 +100,17 @@ class _CoachProfileHeaderState extends State<CoachProfileHeader> {
                       widget.coach.coachingAreas?.length ?? 0,
                       (index) {
                         return TRoundedContainer(
-                          height: 22,
+                          height: 22.h,
                           padding: const EdgeInsets.symmetric(horizontal: 8),
-                          radius: 5,
+                          radius: 5.r,
                           child: Text(
-                            '${widget.coach.coachingAreas![index]}',
+                            widget.coach.coachingAreas![index].label,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: Theme.of(context)
                                 .textTheme
                                 .titleSmall!
-                                .copyWith(fontSize: 14),
+                                .copyWith(fontSize: 14.sp),
                           ),
                         );
                       },
@@ -131,7 +132,7 @@ class _CoachProfileHeaderState extends State<CoachProfileHeader> {
                 widget.coach.profileURL?.length ?? 0,
                 (index) => TRoundedContainer(
                   margin: const EdgeInsets.only(right: 10, bottom: 10),
-                  height: 15,
+                  height: 15.h,
                   width: index == currentIndex ? 30 : 15,
                   borderWidth: index == currentIndex ? 3 : 1,
                   showBorder: true,
@@ -158,8 +159,8 @@ class _CoachProfileHeaderState extends State<CoachProfileHeader> {
                     },
                     child: TCircularContainer(
                         margin: const EdgeInsets.only(right: 10, bottom: 15),
-                        height: 50,
-                        width: 50,
+                        height: 50.h,
+                        width: 50.w,
                         child: isFav
                             ? const Icon(Icons.favorite,
                                 color: AppColors.primary, size: 30)

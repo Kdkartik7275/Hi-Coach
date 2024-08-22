@@ -11,7 +11,7 @@ import 'package:hi_coach/src/search/widgets/searched_coach_tile.dart';
 
 class SearchedCoachesList extends StatelessWidget {
   final SearchCoachesController controller;
-  SearchedCoachesList({
+  const SearchedCoachesList({
     super.key,
     required this.controller,
   });

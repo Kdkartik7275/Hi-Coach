@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_coach/core/conifg/app_pages.dart';
@@ -9,9 +10,9 @@ import 'package:hi_coach/core/conifg/strings.dart';
 class WhoYouAre extends StatelessWidget {
   final bool isSocialLogin;
   const WhoYouAre({
-    Key? key,
+    super.key,
     required this.isSocialLogin,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +23,9 @@ class WhoYouAre extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            const SizedBox(height: 200),
+            SizedBox(height: 200.h),
             Text('I am a', style: Theme.of(context).textTheme.headlineLarge),
-            const SizedBox(height: 50),
+            SizedBox(height: 50.h),
             InkWell(
               onTap: () {
                 if (isSocialLogin) {
@@ -33,23 +34,23 @@ class WhoYouAre extends StatelessWidget {
                 }
               },
               child: Container(
-                height: 61,
-                width: 271,
+                height: 61.h,
+                width: 271.w,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.r),
                     color: AppColors.filled.withOpacity(0.5)),
-                child: const Center(
+                child: Center(
                   child: Text(
                     'Student',
                     style: TextStyle(
                         color: AppColors.primary,
-                        fontSize: 16,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.w600),
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20.h),
             InkWell(
               onTap: () {
                 if (isSocialLogin) {
@@ -58,15 +59,15 @@ class WhoYouAre extends StatelessWidget {
                 }
               },
               child: Container(
-                height: 61,
-                width: 271,
+                height: 61.h,
+                width: 271.w,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.r),
                     color: AppColors.primary),
-                child: const Center(
+                child: Center(
                   child: Text(
                     'Coach',
-                    style: TextStyle(color: AppColors.white, fontSize: 16),
+                    style: TextStyle(color: AppColors.white, fontSize: 16.sp),
                   ),
                 ),
               ),

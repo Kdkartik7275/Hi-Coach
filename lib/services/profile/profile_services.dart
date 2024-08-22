@@ -1,16 +1,17 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hi_coach/models/coach.dart';
 import 'package:hi_coach/models/package.dart';
 import 'package:hi_coach/models/pricing.dart';
-import 'package:hi_coach/models/user.dart';
+import 'package:hi_coach/models/student.dart';
 import 'package:hi_coach/services/storage/storage_services.dart';
 
 class ProfileServices {
   final _firestore = FirebaseFirestore.instance;
   final StorageServices storageServices = StorageServices();
 
-  Future<void> saveStudentInfo(UserModel newStudent) async {
+  Future<void> saveStudentInfo(Student newStudent) async {
     try {
       await _firestore
           .collection('Students')
@@ -21,7 +22,7 @@ class ProfileServices {
     }
   }
 
-  Future<void> saveCoachInfo(UserModel newCoach) async {
+  Future<void> saveCoachInfo(Coach newCoach) async {
     try {
       await _firestore
           .collection('Coaches')
@@ -123,24 +124,31 @@ class ProfileServices {
     }
   }
 
-  Future<UserModel?> fetchUserById(String userId) async {
+  Future<Student?> fetchStudentByID(String id) async {
     try {
-      // Check the coach collection first
-      DocumentSnapshot coachDoc =
-          await _firestore.collection('Coaches').doc(userId).get();
-      if (coachDoc.exists) {
-        return UserModel.fromMap(coachDoc.data() as Map<String, dynamic>);
-      }
-
-      // If not found, check the student collection
       DocumentSnapshot studentDoc =
-          await _firestore.collection('Students').doc(userId).get();
+          await _firestore.collection('Students').doc(id).get();
       if (studentDoc.exists) {
-        return UserModel.fromMap(studentDoc.data() as Map<String, dynamic>);
+        return Student.fromMap(studentDoc.data() as Map<String, dynamic>);
       }
 
       return null;
     } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  Future<Coach?> fetchCoachByID(String id) async {
+    try {
+      DocumentSnapshot coachDoc =
+          await _firestore.collection('Coaches').doc(id).get();
+      if (coachDoc.exists) {
+        return Coach.fromMap(coachDoc.data() as Map<String, dynamic>);
+      }
+
+      return null;
+    } catch (e) {
+      print(e.toString());
       throw e.toString();
     }
   }

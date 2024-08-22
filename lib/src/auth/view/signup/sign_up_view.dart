@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hi_coach/core/common/widget/date/date_picker.dart';
 import 'package:hi_coach/core/common/widget/heading/heading.dart';
@@ -26,11 +27,11 @@ class SignUpView extends StatelessWidget {
           progressIndicator: circularProgress(context),
           isLoading: controller.registering.value,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 24),
+            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 24.h),
             child: ListView(
               children: [
                 TitleSubtitle(title: AppStrings.signup),
-                const SizedBox(height: 30),
+                SizedBox(height: 30.h),
 
                 // REGISTER USER FORM
 
@@ -53,7 +54,7 @@ class SignUpView extends StatelessWidget {
                                 'Full Name', value),
                             controller: controller.fullName.value),
 
-                        const SizedBox(height: 14),
+                        SizedBox(height: 14.h),
                         // EMAIL
                         Text(
                           'Email',
@@ -67,7 +68,7 @@ class SignUpView extends StatelessWidget {
                             validator: (value) =>
                                 TValidator.validateEmail(value),
                             controller: controller.email.value),
-                        const SizedBox(height: 14),
+                        SizedBox(height: 14.h),
                         // PASSWORD
 
                         Text(
@@ -88,7 +89,7 @@ class SignUpView extends StatelessWidget {
                                     ? Icons.visibility_off
                                     : Icons.visibility)),
                             controller: controller.password.value),
-                        const SizedBox(height: 14),
+                        SizedBox(height: 14.h),
                         // PHONE NUMBER
 
                         Text(
@@ -101,12 +102,11 @@ class SignUpView extends StatelessWidget {
                         Row(
                           children: [
                             Container(
-                                height: 54,
-                                width: 80,
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8),
+                                height: 54.h,
+                                width: 80.w,
+                                padding: EdgeInsets.symmetric(horizontal: 10.w),
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
+                                    borderRadius: BorderRadius.circular(12.r),
                                     border:
                                         Border.all(color: AppColors.border)),
                                 child: Row(
@@ -114,7 +114,9 @@ class SignUpView extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                        "+${controller.selectedCountry.value!.phoneCode}"),
+                                      "+${controller.selectedCountry.value!.phoneCode}",
+                                      style: TextStyle(fontSize: 16.sp),
+                                    ),
                                     GestureDetector(
                                         onTap: () {
                                           showCountryPicker(
@@ -128,7 +130,7 @@ class SignUpView extends StatelessWidget {
                                             const Icon(Icons.arrow_drop_down))
                                   ],
                                 )),
-                            const SizedBox(width: 15),
+                            SizedBox(width: 15.w),
                             Expanded(
                                 child: AuthField(
                                     hintText: '',
@@ -140,7 +142,7 @@ class SignUpView extends StatelessWidget {
                       ],
                     )),
 
-                const SizedBox(height: 14),
+                SizedBox(height: 14.h),
                 Text(
                   'DOB',
                   style: Theme.of(context)
@@ -154,7 +156,7 @@ class SignUpView extends StatelessWidget {
                   month: (month) => controller.month.value = month!,
                   year: (year) => controller.year.value = year!,
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: 30.h),
                 AuthButton(
                   label: 'Register',
                   onPressed: () {

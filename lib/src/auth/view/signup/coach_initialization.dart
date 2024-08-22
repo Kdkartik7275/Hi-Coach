@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:hi_coach/core/common/widget/image/pick_image.dart';
@@ -16,9 +17,9 @@ import 'package:loading_overlay/loading_overlay.dart';
 class CoachInitialization extends StatefulWidget {
   final String fullName;
   const CoachInitialization({
-    Key? key,
+    super.key,
     required this.fullName,
-  }) : super(key: key);
+  });
 
   @override
   State<CoachInitialization> createState() => _CoachInitializationState();
@@ -52,17 +53,17 @@ class _CoachInitializationState extends State<CoachInitialization> {
           progressIndicator: circularProgress(context),
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 30),
+              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 30.h),
               child: Center(
                 child: Column(
                   children: [
                     const PickImage(),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10.h),
                     Text(
                       widget.fullName,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    const SizedBox(height: 60),
+                    SizedBox(height: 60.h),
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
@@ -73,7 +74,7 @@ class _CoachInitializationState extends State<CoachInitialization> {
                             .copyWith(color: AppColors.hintText),
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10.h),
                     GridView(
                       shrinkWrap: true,
                       gridDelegate:
@@ -89,10 +90,10 @@ class _CoachInitializationState extends State<CoachInitialization> {
                             selectSports(sportsName[index]);
                           },
                           child: Container(
-                            width: 110,
-                            height: 30,
+                            width: 110.w,
+                            height: 30.h,
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(10.r),
                                 color:
                                     selectedSports.contains(sportsName[index])
                                         ? AppColors.primary
@@ -105,14 +106,14 @@ class _CoachInitializationState extends State<CoachInitialization> {
                                     .titleSmall!
                                     .copyWith(
                                         fontWeight: FontWeight.w700,
-                                        fontSize: 14),
+                                        fontSize: 14.sp),
                               ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 50),
+                    SizedBox(height: 50.h),
                     AuthButton(
                       label: 'Done',
                       onPressed: () {
