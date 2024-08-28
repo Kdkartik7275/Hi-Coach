@@ -131,6 +131,14 @@ class FileUtils {
 String formatTimeOfDay(TimeOfDay time) {
   final now = DateTime.now();
   final dt = DateTime(now.year, now.month, now.day, time.hour, time.minute);
-  final format = DateFormat.jm(); // 'jm' will format to '1:38 AM' or '1:38 PM'
+  final format = DateFormat.jm();
   return format.format(dt);
+}
+
+String formatTime(String time) {
+  DateTime parsedTime = DateFormat.Hm().parse(time);
+
+  String formattedTime = DateFormat('h:mm a').format(parsedTime);
+
+  return formattedTime;
 }

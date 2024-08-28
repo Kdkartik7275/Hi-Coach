@@ -54,7 +54,7 @@ class CoachProfileStudentView extends StatelessWidget {
                     // ONLY STUDENT CAN SEE THESE
                     const CoachContactInfoButtons(),
                     SizedBox(height: 25.h),
-                    ProfileButton(
+                    CustomButton(
                         size: Size(width * 0.85.w, height * 0.075.h),
                         label: 'Book Now',
                         onPressed: () =>

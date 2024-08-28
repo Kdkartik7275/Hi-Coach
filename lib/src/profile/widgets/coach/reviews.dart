@@ -31,7 +31,7 @@ class CoachReviewWidget extends StatelessWidget {
           ],
         ),
         SizedBox(height: 20.h),
-        ProfileButton(
+        CustomButton(
             label: 'Wrtie Review',
             size: const Size(280, 45),
             backgroundColor: Colors.green.shade500,

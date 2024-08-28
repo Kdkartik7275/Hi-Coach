@@ -1,17 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import 'package:hi_coach/core/conifg/colors.dart';
 import 'package:hi_coach/core/utils/helpers/functions.dart';
 import 'package:hi_coach/models/student.dart';
 import 'package:hi_coach/services/schedule/schedule_services.dart';
 import 'package:hi_coach/src/schedule/views/calender_view.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
 
 class ScheduleController extends GetxController {
-  List repeat = ['Every Day', 'Every Week', 'One Time'];
-
   // CONTROLLERS
 
   final title = TextEditingController();

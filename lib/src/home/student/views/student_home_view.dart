@@ -7,6 +7,7 @@ import 'package:hi_coach/core/common/widget/heading/heading.dart';
 import 'package:hi_coach/core/conifg/app_images.dart';
 import 'package:hi_coach/core/conifg/app_pages.dart';
 import 'package:hi_coach/core/conifg/colors.dart';
+import 'package:hi_coach/src/bookings/controller/booking_controller.dart';
 import 'package:hi_coach/src/favourite/controller/favourite_controller.dart';
 import 'package:hi_coach/src/home/student/widgets/drawer.dart';
 import 'package:hi_coach/src/notifications/contnroller/notification_controller.dart';
@@ -20,6 +21,7 @@ class StudentHomeView extends GetView<ProfileController> {
     final user = controller.user!;
     Get.put(NotificationController());
     Get.put(FavouriteController());
+    Get.put(BookingController());
 
     Get.put(LocationController());
     return Scaffold(

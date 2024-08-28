@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hi_coach/core/common/widget/dialog/student_delete_dialog.dart';
+import 'package:hi_coach/core/utils/constants/constants.dart';
 import 'package:hi_coach/src/schedule/widgets/invite_student_dialog.dart';
 import 'package:hi_coach/src/schedule/widgets/student_tile.dart';
 import 'package:loading_overlay/loading_overlay.dart';
@@ -155,10 +156,10 @@ class AddScheduleView extends GetView<ScheduleController> {
                         scheduleController: controller,
                         initialValue: controller.repeatValue.value,
                         list: List.generate(
-                            controller.repeat.length,
+                            repeat.length,
                             (index) => DropdownMenuItem(
-                                  value: controller.repeat[index],
-                                  child: Text(controller.repeat[index]),
+                                  value: repeat[index],
+                                  child: Text(repeat[index]),
                                 )),
                         onChanged: (String? value) {
                           controller.repeatValue.value = value!;
